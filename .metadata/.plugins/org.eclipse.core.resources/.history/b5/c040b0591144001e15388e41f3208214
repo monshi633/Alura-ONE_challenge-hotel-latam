@@ -1,0 +1,22 @@
+package test;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import factory.ConnectionFactory;
+import model.Guest;
+
+public class PruebaDelete {
+
+	public static void main(String[] args) throws SQLException {
+
+		ConnectionFactory factory = new ConnectionFactory();
+		Connection con = factory.createConnection();
+		
+		
+		Guest laura = new Guest(con, "Laura", "Lopez", "1990-03-21", "argentino", "98765");
+		laura.insertGuest();
+		laura.deleteGuest();
+	}
+
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="java.sql.DriverManager"/>
+    <fullyQualifiedTypeName name="factory.ConnectionFactory"/>
+    <fullyQualifiedTypeName name="java.sql.Connection"/>
+    <fullyQualifiedTypeName name="java.util.Date"/>
+    <fullyQualifiedTypeName name="model.Guest"/>
+    <fullyQualifiedTypeName name="model.Reserve"/>
+    <fullyQualifiedTypeName name="model.Guests"/>
+    <fullyQualifiedTypeName name="java.sql.SQLException"/>
+    <fullyQualifiedTypeName name="model.Reserves"/>
+    <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
+    <fullyQualifiedTypeName name="java.sql.Date"/>
+    <fullyQualifiedTypeName name="java.sql.ResultSet"/>
+    <fullyQualifiedTypeName name="java.sql.Statement"/>
+    <fullyQualifiedTypeName name="java.awt.event.FocusEvent"/>
+    <fullyQualifiedTypeName name="view.Confirmacion"/>
+    <fullyQualifiedTypeName name="utils.Credentials"/>
+    <fullyQualifiedTypeName name="view.MenuPrincipal"/>
+    <fullyQualifiedTypeName name="view.RegistroReservas"/>
+</qualifiedTypeNameHistroy>

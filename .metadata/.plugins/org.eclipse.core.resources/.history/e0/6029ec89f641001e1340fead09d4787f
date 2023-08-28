@@ -1,0 +1,14 @@
+package test;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public class PruebaConexion {
+
+	public static void main(String[] args) {
+
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel_alura?useTimezone=true&serverTimezone=UTC", "root", "0Ysql$celeste7!")
+
+	}
+
+}

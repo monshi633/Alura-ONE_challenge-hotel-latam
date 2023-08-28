@@ -1,0 +1,14 @@
+package model;
+
+import java.sql.Connection;
+import java.sql.Date;
+
+public class Reserve {
+
+	Connection con;
+	Integer guest_id;
+	String apellido;
+	Date fechaNacimiento;
+	String nacionalidad;
+	String telefono;
+}

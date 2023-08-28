@@ -1,0 +1,16 @@
+package test;
+
+import java.sql.SQLException;
+
+import model.Guests;
+
+public class TableTest {
+
+	public static void main(String[] args) throws SQLException {
+
+		Guests guests = new Guests();
+		guests.createGuest();
+
+	}
+
+}

@@ -1,0 +1,14 @@
+package model;
+
+import java.sql.Connection;
+import java.sql.Date;
+
+public class Reserve {
+
+	Connection con;
+	Integer huesped_id;
+	Date fechaEntrada;
+	Date fechaSalida;
+	String valor;
+	String formaPago;
+}

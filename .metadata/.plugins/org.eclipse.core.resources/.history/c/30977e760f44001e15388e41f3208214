@@ -1,0 +1,75 @@
+package model;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class Guests {
+
+	Connection con;
+
+	public Guests(Connection con) {
+		this.con = con;
+	}
+	
+	public void createGuest(String nombre, String apellido, String fechaNacimiento, String nacionalidad, String telefono) throws SQLException {
+		String statement = "INSERT INTO HUESPEDES (nombre, apellido, fechaNacimiento, nacionalidad, telefono) VALUES (?, ?, ?, ?, ?)";
+		PreparedStatement stm = con.prepareStatement(statement, Statement.RETURN_GENERATED_KEYS);
+		
+		stm.setString(1, nombre);
+		stm.setString(2, apellido);
+		stm.setDate(3, Date.valueOf(fechaNacimiento));
+		stm.setString(4, nacionalidad);
+		stm.setString(5, telefono);
+		
+		stm.executeUpdate();
+		
+		ResultSet rst = stm.getGeneratedKeys();
+		while(rst.next()) {
+			Integer id = rst.getInt(1);
+			System.out.println("New guest inserted with id = " + id);
+		}
+	}
+
+	public void readGuest(Integer id) throws SQLException {
+		String statement = "SELECT * FROM HUESPEDES WHERE id = ?";
+		PreparedStatement stm = con.prepareStatement(statement, Statement.RETURN_GENERATED_KEYS);
+		
+		stm.setInt(1, id);
+		stm.execute();
+		
+		ResultSet rst = stm.executeQuery();
+		while(rst.next()) {
+			String nombre = rst.getString("nombre");
+			String apellido = rst.getString("apellido");
+			String fechaNacimiento = rst.getString("fechaNacimiento");
+			String nacionalidad = rst.getString("nacionalidad");
+			String telefono = rst.getString("telefono");
+			System.out.println("Guest id = " + id + "\n" 
+					+ "Guest nombre = " + nombre + "\n" 
+					+ "Guest apellido = " + apellido + "\n" 
+					+ "Guest fecha de nacimiento = " + fechaNacimiento + "\n"
+					+ "Guest nacionalidad = " + nacionalidad + "\n"
+					+ "Guest telefono = " + telefono);
+		}
+	}
+
+	public void updateGuest(Integer id, String nombre, String apellido, String fechaNacimiento, String nacionalidad, String telefono) throws SQLException ) {
+		
+	}
+
+	public void deleteGuest(Integer id) throws SQLException {
+		System.out.println("Deleting guest:");
+		readGuest(id);
+		
+		String statement = "DELETE FROM HUESPEDES WHERE id = ?";
+		PreparedStatement stm = con.prepareStatement(statement, Statement.RETURN_GENERATED_KEYS);
+		
+		stm.setInt(1, id);
+		stm.executeUpdate();
+	}
+	
+}

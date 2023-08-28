@@ -1,0 +1,56 @@
+package model;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class Guest {
+
+	Connection con;
+	String nombre;
+	String apellido;
+	Date fechaNacimiento;
+	String nacionalidad;
+	String telefono;
+		
+	public Guest(Connection con, String nombre, String apellido, String fechaNacimiento, String nacionalidad, String telefono) {
+		this.con = con;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.fechaNacimiento = Date.valueOf(fechaNacimiento);
+		this.nacionalidad = nacionalidad;
+		this.telefono = telefono;
+	}
+	
+	public void insertGuest() throws SQLException {
+		String statement = "INSERT INTO HUESPEDES (nombre, apellido, fechaNacimiento, nacionalidad, telefono) VALUES (?, ?, ?, ?, ?)";
+		PreparedStatement stm = con.prepareStatement(statement, Statement.RETURN_GENERATED_KEYS);
+		
+		stm.setString(1, nombre);
+		stm.setString(2, apellido);
+		stm.setDate(3, fechaNacimiento);
+		stm.setString(4, nacionalidad);
+		stm.setString(5, telefono);
+		
+		stm.execute();
+		
+		ResultSet rst = stm.getGeneratedKeys();
+		while(rst.next()) {
+			Integer id = rst.getInt(1);
+			System.out.println("New guest inserted with id = " + id);
+		}
+	}
+	
+	public void removeGuest() throws SQLException {
+		String statement = "DELETE FROM HUESPEDES WHERE nombre = ? AND apellido = ?";
+		PreparedStatement stm = con.prepareStatement(statement, Statement.RETURN_GENERATED_KEYS);
+		
+		stm.setString(1, nombre);
+		stm.setString(2, apellido);
+		stm.execute();
+	}
+
+}

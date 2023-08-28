@@ -1,0 +1,32 @@
+1692825953876	Rename local variable 'con'
+1692969455978	Delete element
+1692970149653	Rename field 'name'
+1692970160320	Rename local variable 'name'
+1692970173063	Rename field 'surname'
+1692970178493	Rename local variable 'surname'
+1692970185799	Rename field 'birthDate'
+1692970195738	Rename local variable 'birthDate'
+1692970200839	Rename field 'nationality'
+1692970205698	Rename local variable 'nationality'
+1692970210981	Rename field 'phone'
+1692970215114	Rename local variable 'phone'
+1692970763531	Rename type 'InsertGuest'
+1692970869337	Rename method 'Insert'
+1692986719915	Rename local variable 'juan'
+1692992166197	Rename method 'removeGuest'
+1692993762622	Rename local variable 'reserve1'
+1693008447548	Rename local variable 'juan'
+1693009438021	Rename type 'TableTest'
+1693052734521	Rename type 'CreateGuestTest'
+1693053237332	Rename type 'TestCreateGuest'
+1693054574923	Rename type 'TestCreateGuests'
+1693054992300	Delete element
+1693055180496	Delete element
+1693055184082	Delete element
+1693055234362	Rename type 'Reserve'
+1693056429240	Copy compilation unit
+1693057038284	Rename local variable 'apellido'
+1693057053102	Rename local variable 'fechaNacimiento'
+1693057063038	Rename local variable 'nacionalidad'
+1693057071502	Rename local variable 'telefono'
+1693057750494	Delete element
