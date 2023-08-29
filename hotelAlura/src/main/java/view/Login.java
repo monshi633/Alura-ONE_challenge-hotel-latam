@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import utils.Credentials;
+import utils.UserCredentials;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -263,7 +263,7 @@ public class Login extends JFrame {
 	}
 
 	private void login() {
-		Credentials credentials = new Credentials();
+		UserCredentials credentials = new UserCredentials();
 		String username = credentials.getUsername();
 		String password = credentials.getPassword();
 

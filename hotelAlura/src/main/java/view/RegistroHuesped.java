@@ -7,6 +7,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import java.awt.Color;
 import com.toedter.calendar.JDateChooser;
+
+import factory.ConnectionFactory;
+import model.Guests;
+import model.Reserves;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
@@ -18,7 +23,10 @@ import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.awt.Toolkit;
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
@@ -173,6 +181,7 @@ public class RegistroHuesped extends JFrame {
 				"puertorriqueño-puertorriqueño", "dominicano-dominicana", "rumano-rumana", "ruso-rusa", "sueco-sueca",
 				"suizo-suiza", "tailandés-tailandesa", "taiwanes-taiwanesa", "turco-turca", "ucraniano-ucraniana",
 				"uruguayo-uruguaya", "venezolano-venezolana", "vietnamita-vietnamita" }));
+		String selectedNationality = (String) txtNacionalidad.getSelectedItem();
 		contentPane.add(txtNacionalidad);
 
 		JLabel lblNombre = new JLabel("NOMBRE");
@@ -277,6 +286,28 @@ public class RegistroHuesped extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				if (RegistroHuesped.txtNombre.getText() != null && RegistroHuesped.txtFechaN.getDate() != null) {
 //					TO DO: guardar en base de datos
+					ConnectionFactory factory = new ConnectionFactory();
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					try {
+						Connection con = factory.createConnection();
+						Guests guests = new Guests(con);
+						Reserves reserves = new Reserves(con);
+//						TO DO: Casi perfecto, están fallando los get de contenido de los drop down selectedNationality y selectedPayment
+						reserves.createReserve(
+								guests.createGuest(
+										txtNombre.getText().toString(),
+										txtApellido.getText().toString(),
+										sdf.format(txtFechaN.getDate()).toString(),
+										selectedNationality,
+										txtTelefono.getText().toString()),
+								sdf.format(reservas.txtFechaEntrada.getDate()).toString(),
+								sdf.format(reservas.txtFechaSalida.getDate()).toString(),
+								reservas.txtValor.getText().toString(),
+								reservas.selectedPayment);
+						con.close();
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
 					reservas.dispose();
 					dispose();
 					Exito exito = new Exito();

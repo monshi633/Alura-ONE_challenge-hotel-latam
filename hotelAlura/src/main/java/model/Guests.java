@@ -10,12 +10,13 @@ import java.sql.Statement;
 public class Guests {
 
 	Connection con;
+	Integer id;
 
 	public Guests(Connection con) {
 		this.con = con;
 	}
 	
-	public void createGuest(String nombre, String apellido, String fechaNacimiento, String nacionalidad, String telefono) throws SQLException {
+	public Integer createGuest(String nombre, String apellido, String fechaNacimiento, String nacionalidad, String telefono) throws SQLException {
 		String statement = "INSERT INTO huespedes (nombre, apellido, fechaNacimiento, nacionalidad, telefono) VALUES (?, ?, ?, ?, ?)";
 		PreparedStatement stm = con.prepareStatement(statement, Statement.RETURN_GENERATED_KEYS);
 		
@@ -28,9 +29,10 @@ public class Guests {
 		
 		ResultSet rst = stm.getGeneratedKeys();
 		while(rst.next()) {
-			Integer id = rst.getInt(1);
-			System.out.println("New guest inserted with id: " + id);
+			id = rst.getInt(1);
+//			System.out.println("New guest inserted with id: " + id);
 		}
+		return id;
 	}
 
 	public void readGuest(Integer id) throws SQLException {

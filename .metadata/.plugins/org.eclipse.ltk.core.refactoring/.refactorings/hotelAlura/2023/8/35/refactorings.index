@@ -7,3 +7,8 @@
 1693345311164	Rename field 'dayAmount'
 1693345316518	Rename local variable 'dayAmount'
 1693346703045	Delete element
+1693349543260	Rename type 'Credentials'
+1693349557100	Copy compilation unit
+1693349718583	Rename type 'DatabaseCredentials'
+1693350452352	Rename local variable 'format'
+1693351839398	Rename local variable 'selectedValue'
