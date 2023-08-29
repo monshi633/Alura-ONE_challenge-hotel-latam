@@ -1,0 +1,14 @@
+package test;
+
+import utils.ValueCalculator;
+
+public class TestValueCalculator {
+
+	public static void main(String[] args) {
+
+		ValueCalculator vc = new ValueCalculator(5);
+		vc.setDayPrice("500");
+		System.out.println(vc.getTotalPrice());
+	}
+
+}

@@ -1,0 +1,29 @@
+package controller;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+
+import view.MenuPrincipal;
+
+@SuppressWarnings("serial")
+public class Launcher extends JFrame {
+
+	public static void main(String[] args) {
+
+		/**
+		 * Launch the application.
+		 */
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					MenuPrincipal frame = new MenuPrincipal();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+}

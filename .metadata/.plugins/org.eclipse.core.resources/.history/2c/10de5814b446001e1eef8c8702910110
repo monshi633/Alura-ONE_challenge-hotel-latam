@@ -1,0 +1,14 @@
+package test;
+
+import utils.ReservePrice;
+
+public class TestValueCalculator {
+
+	public static void main(String[] args) {
+
+		ReservePrice vc = new ReservePrice();
+		vc.setDayAmount(2);
+		System.out.println(vc.getTotalPrice());
+	}
+
+}

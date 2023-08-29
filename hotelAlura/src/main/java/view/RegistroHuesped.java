@@ -10,6 +10,8 @@ import com.toedter.calendar.JDateChooser;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.ImageIcon;
 import java.awt.SystemColor;
@@ -26,12 +28,12 @@ public class RegistroHuesped extends JFrame {
 
 	private static RegistroReservas reservas;
 	private JPanel contentPane;
-	private JTextField txtNombre;
-	private JTextField txtApellido;
-	private JTextField txtTelefono;
-	private JTextField txtNreserva;
-	private JDateChooser txtFechaN;
-	private JComboBox<Format> txtNacionalidad;
+	private static JTextField txtNombre;
+	private static JTextField txtApellido;
+	private static JTextField txtTelefono;
+//	private static JTextField txtNreserva;
+	private static JDateChooser txtFechaN;
+	private static JComboBox<Format> txtNacionalidad;
 	private JLabel labelExit;
 	private JLabel labelAtras;
 	int xMouse, yMouse;
@@ -93,6 +95,10 @@ public class RegistroHuesped extends JFrame {
 		header.setBounds(0, 0, 910, 36);
 		contentPane.add(header);
 
+//		TO DO: cuando hago click en siguiente me abre una nueva ventana sin cerrar esta, si la muevo puedo ver las dos ventanas
+//		si voy para atrás en reservas o si la cierro sin cerrar huésped se me duplica el árbol
+//		Para resolverlo, o hago que los datos se guarden incluso cuando se cierra registro reservas y me lleva al registro huespedes
+//		o que por más que se puedan ver las dos ventanas, registro reservas no se pueda tocar hasta haber accionado algún botón en registro huespedes
 		final JPanel btnAtras = new JPanel();
 		btnAtras.addMouseListener(new MouseAdapter() {
 			@Override
@@ -207,25 +213,26 @@ public class RegistroHuesped extends JFrame {
 		txtTelefono.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		contentPane.add(txtTelefono);
 
-		JLabel lblTitulo = new JLabel("REGISTRO HUÉSPED");
-		lblTitulo.setBounds(606, 55, 234, 42);
+		JLabel lblTitulo = new JLabel("REGISTRO DE NUEVO HUÉSPED");
+		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitulo.setBounds(560, 55, 289, 42);
 		lblTitulo.setForeground(new Color(12, 138, 199));
-		lblTitulo.setFont(new Font("Roboto Black", Font.PLAIN, 23));
+		lblTitulo.setFont(new Font("Roboto", Font.BOLD, 20));
 		contentPane.add(lblTitulo);
 
-		JLabel lblNumeroReserva = new JLabel("NÚMERO DE RESERVA");
-		lblNumeroReserva.setBounds(560, 474, 253, 14);
-		lblNumeroReserva.setForeground(SystemColor.textInactiveText);
-		lblNumeroReserva.setFont(new Font("Roboto Black", Font.PLAIN, 18));
-		contentPane.add(lblNumeroReserva);
-
-		txtNreserva = new JTextField();
-		txtNreserva.setFont(new Font("Roboto", Font.PLAIN, 16));
-		txtNreserva.setBounds(560, 495, 285, 33);
-		txtNreserva.setColumns(10);
-		txtNreserva.setBackground(Color.WHITE);
-		txtNreserva.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-		contentPane.add(txtNreserva);
+//		JLabel lblNumeroReserva = new JLabel("NÚMERO DE RESERVA");
+//		lblNumeroReserva.setBounds(560, 474, 253, 14);
+//		lblNumeroReserva.setForeground(SystemColor.textInactiveText);
+//		lblNumeroReserva.setFont(new Font("Roboto Black", Font.PLAIN, 18));
+//		contentPane.add(lblNumeroReserva);
+//
+//		txtNreserva = new JTextField();
+//		txtNreserva.setFont(new Font("Roboto", Font.PLAIN, 16));
+//		txtNreserva.setBounds(560, 495, 285, 33);
+//		txtNreserva.setColumns(10);
+//		txtNreserva.setBackground(Color.WHITE);
+//		txtNreserva.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+//		contentPane.add(txtNreserva);
 
 		JSeparator separator_1_2 = new JSeparator();
 		separator_1_2.setBounds(560, 170, 289, 2);
@@ -257,17 +264,26 @@ public class RegistroHuesped extends JFrame {
 		separator_1_2_4.setBackground(new Color(12, 138, 199));
 		contentPane.add(separator_1_2_4);
 
-		JSeparator separator_1_2_5 = new JSeparator();
-		separator_1_2_5.setBounds(560, 529, 289, 2);
-		separator_1_2_5.setForeground(new Color(12, 138, 199));
-		separator_1_2_5.setBackground(new Color(12, 138, 199));
-		contentPane.add(separator_1_2_5);
+//		JSeparator separator_1_2_5 = new JSeparator();
+//		separator_1_2_5.setBounds(560, 529, 289, 2);
+//		separator_1_2_5.setForeground(new Color(12, 138, 199));
+//		separator_1_2_5.setBackground(new Color(12, 138, 199));
+//		contentPane.add(separator_1_2_5);
 
 		JPanel btnguardar = new JPanel();
 		btnguardar.setBounds(723, 560, 122, 35);
 		btnguardar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if (RegistroHuesped.txtNombre.getText() != null && RegistroHuesped.txtFechaN.getDate() != null) {
+//					TO DO: guardar en base de datos
+					reservas.dispose();
+					dispose();
+					Exito exito = new Exito();
+					exito.setVisible(true);			
+				} else {
+					JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
+				}
 			}
 		});
 		btnguardar.setLayout(null);

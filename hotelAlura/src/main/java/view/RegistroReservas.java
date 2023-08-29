@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
+import utils.ReservePrice;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -19,11 +20,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.Toolkit;
 import java.beans.PropertyChangeListener;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import java.beans.PropertyChangeEvent;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
-
 
 @SuppressWarnings("serial")
 public class RegistroReservas extends JFrame {
@@ -70,92 +72,36 @@ public class RegistroReservas extends JFrame {
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setUndecorated(true);
-		
 
-		
 		JPanel panel = new JPanel();
 		panel.setBorder(null);
 		panel.setBackground(Color.WHITE);
 		panel.setBounds(0, 0, 910, 560);
-		contentPane.add(panel);
 		panel.setLayout(null);
-		
-		// Código que crea los elementos de la interfáz gráfica
-		
-		JSeparator separator_1_2 = new JSeparator();
-		separator_1_2.setForeground(SystemColor.textHighlight);
-		separator_1_2.setBounds(68, 195, 289, 2);
-		separator_1_2.setBackground(SystemColor.textHighlight);
-		panel.add(separator_1_2);
-		
-		JSeparator separator_1_3 = new JSeparator();
-		separator_1_3.setForeground(SystemColor.textHighlight);
-		separator_1_3.setBackground(SystemColor.textHighlight);
-		separator_1_3.setBounds(68, 453, 289, 2);
-		panel.add(separator_1_3);
-		
-		JSeparator separator_1_1 = new JSeparator();
-		separator_1_1.setForeground(SystemColor.textHighlight);
-		separator_1_1.setBounds(68, 281, 289, 11);
-		separator_1_1.setBackground(SystemColor.textHighlight);
-		panel.add(separator_1_1);
-		
-		JLabel lblCheckIn = new JLabel("FECHA DE CHECK IN");
-		lblCheckIn.setForeground(SystemColor.textInactiveText);
-		lblCheckIn.setBounds(68, 136, 169, 14);
-		lblCheckIn.setFont(new Font("Roboto Black", Font.PLAIN, 18));
-		panel.add(lblCheckIn);
-		
-		JLabel lblCheckOut = new JLabel("FECHA DE CHECK OUT");
-		lblCheckOut.setForeground(SystemColor.textInactiveText);
-		lblCheckOut.setBounds(68, 221, 187, 14);
-		lblCheckOut.setFont(new Font("Roboto Black", Font.PLAIN, 18));
-		panel.add(lblCheckOut);
-		
-		JLabel lblFormaPago = new JLabel("FORMA DE PAGO");
-		lblFormaPago.setForeground(SystemColor.textInactiveText);
-		lblFormaPago.setBounds(68, 382, 187, 24);
-		lblFormaPago.setFont(new Font("Roboto Black", Font.PLAIN, 18));
-		panel.add(lblFormaPago);
-		
-		JLabel lblTitulo = new JLabel("REGISTRO DE RESERVA");
-		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitulo.setBounds(68, 60, 289, 42);
-		lblTitulo.setForeground(new Color(12, 138, 199));
-		lblTitulo.setFont(new Font("Roboto", Font.BOLD, 20));
-		panel.add(lblTitulo);
-		
+		contentPane.add(panel);
+
+//		Panel_1
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(428, 0, 482, 560);
 		panel_1.setBackground(new Color(12, 138, 199));
-		panel.add(panel_1);
 		panel_1.setLayout(null);
+		panel.add(panel_1);
 		
 		JLabel logo = new JLabel("");
 		logo.setBounds(197, 68, 104, 107);
-		panel_1.add(logo);
 		logo.setIcon(new ImageIcon(RegistroReservas.class.getResource("/imagenes/Ha-100px.png")));
+		panel_1.add(logo);
 		
 		JLabel imagenFondo = new JLabel("");
-		imagenFondo.setBounds(0, 140, 500, 409);
-		panel_1.add(imagenFondo);
+		imagenFondo.setBounds(0, 140, 482, 420);
 		imagenFondo.setBackground(Color.WHITE);
 		imagenFondo.setIcon(new ImageIcon(RegistroReservas.class.getResource("/imagenes/reservas-img-3.png")));
+		panel_1.add(imagenFondo);
 		
-		JLabel lblValor = new JLabel("VALOR DE LA RESERVA");
-		lblValor.setForeground(SystemColor.textInactiveText);
-		lblValor.setBounds(72, 303, 196, 14);
-		lblValor.setFont(new Font("Roboto Black", Font.PLAIN, 18));
-		panel.add(lblValor);
-		
-		JSeparator separator_1 = new JSeparator();
-		separator_1.setForeground(SystemColor.textHighlight);
-		separator_1.setBounds(68, 362, 289, 2);
-		separator_1.setBackground(SystemColor.textHighlight);
-		panel.add(separator_1);
-												
 		final JPanel btnexit = new JPanel();
 		btnexit.setBounds(429, 0, 53, 36);
+		btnexit.setLayout(null);
+		btnexit.setBackground(new Color(12, 138, 199));
 		btnexit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -163,35 +109,37 @@ public class RegistroReservas extends JFrame {
 				principal.setVisible(true);
 				dispose();
 			}
+			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				btnexit.setBackground(Color.red);
 				labelExit.setForeground(Color.white);
-			}			
+			}
+			
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnexit.setBackground(new Color(12, 138, 199));
-			    labelExit.setForeground(Color.white);
+				labelExit.setForeground(Color.white);
 			}
 		});
-		btnexit.setLayout(null);
-		btnexit.setBackground(new Color(12, 138, 199));
 		panel_1.add(btnexit);
 		
 		labelExit = new JLabel("X");
 		labelExit.setForeground(Color.WHITE);
 		labelExit.setBounds(0, 0, 53, 36);
-		btnexit.add(labelExit);
 		labelExit.setHorizontalAlignment(SwingConstants.CENTER);
 		labelExit.setFont(new Font("Roboto", Font.PLAIN, 18));
+		btnexit.add(labelExit);
 		
+//		Header
 		JPanel header = new JPanel();
 		header.setBounds(0, 0, 910, 36);
+		header.setLayout(null);
+		header.setBackground(Color.WHITE);
 		header.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseDragged(MouseEvent e) {
 				headerMouseDragged(e);
-			     
 			}
 		});
 		header.addMouseListener(new MouseAdapter() {
@@ -200,134 +148,230 @@ public class RegistroReservas extends JFrame {
 				headerMousePressed(e);
 			}
 		});
-		header.setLayout(null);
-		header.setBackground(Color.WHITE);
 		panel.add(header);
-		
+
 		final JPanel btnAtras = new JPanel();
+		btnAtras.setLayout(null);
+		btnAtras.setBackground(Color.WHITE);
+		btnAtras.setBounds(0, 0, 53, 36);
 		btnAtras.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				MenuUsuario usuario = new MenuUsuario();
 				usuario.setVisible(true);
-				dispose();				
+				dispose();
 			}
+			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				btnAtras.setBackground(new Color(12, 138, 199));
 				labelAtras.setForeground(Color.white);
-			}			
+			}
+			
 			@Override
 			public void mouseExited(MouseEvent e) {
-				 btnAtras.setBackground(Color.white);
-			     labelAtras.setForeground(Color.black);
+				btnAtras.setBackground(Color.white);
+				labelAtras.setForeground(Color.black);
 			}
 		});
-		btnAtras.setLayout(null);
-		btnAtras.setBackground(Color.WHITE);
-		btnAtras.setBounds(0, 0, 53, 36);
 		header.add(btnAtras);
 		
 		labelAtras = new JLabel("<");
 		labelAtras.setBounds(0, 0, 53, 36);
-		btnAtras.add(labelAtras);
 		labelAtras.setHorizontalAlignment(SwingConstants.CENTER);
 		labelAtras.setFont(new Font("Roboto", Font.PLAIN, 23));
+		btnAtras.add(labelAtras);
 		
-		JLabel lblSiguiente = new JLabel("SIGUIENTE");
-		lblSiguiente.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSiguiente.setForeground(Color.WHITE);
-		lblSiguiente.setFont(new Font("Roboto", Font.PLAIN, 18));
-		lblSiguiente.setBounds(0, 0, 122, 35);
+
+//		Form
+		JLabel lblTitulo = new JLabel("REGISTRO DE RESERVA");
+		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitulo.setBounds(70, 60, 290, 42);
+		lblTitulo.setForeground(new Color(12, 138, 199));
+		lblTitulo.setFont(new Font("Roboto", Font.BOLD, 20));
+		panel.add(lblTitulo);
+
+		JLabel lblCheckIn = new JLabel("FECHA DE CHECK IN");
+		lblCheckIn.setForeground(SystemColor.textInactiveText);
+		lblCheckIn.setBounds(70, 110, 290, 14);
+		lblCheckIn.setFont(new Font("Roboto Black", Font.PLAIN, 18));
+		panel.add(lblCheckIn);
+
+		JLabel lblCheckOut = new JLabel("FECHA DE CHECK OUT");
+		lblCheckOut.setForeground(SystemColor.textInactiveText);
+		lblCheckOut.setBounds(70, 195, 290, 14);
+		lblCheckOut.setFont(new Font("Roboto Black", Font.PLAIN, 18));
+		panel.add(lblCheckOut);
+
+		JLabel lblValor = new JLabel("VALOR DE LA RESERVA");
+		lblValor.setForeground(SystemColor.textInactiveText);
+		lblValor.setBounds(70, 280, 290, 14);
+		lblValor.setFont(new Font("Roboto Black", Font.PLAIN, 18));
+		panel.add(lblValor);
+
+		JLabel lblFormaPago = new JLabel("FORMA DE PAGO");
+		lblFormaPago.setForeground(SystemColor.textInactiveText);
+		lblFormaPago.setBounds(70, 365, 290, 14);
+		lblFormaPago.setFont(new Font("Roboto Black", Font.PLAIN, 18));
+		panel.add(lblFormaPago);
+
+		JLabel lblHuesped = new JLabel("HUÉSPED");
+		lblHuesped.setForeground(SystemColor.textInactiveText);
+		lblHuesped.setFont(new Font("Roboto Black", Font.PLAIN, 18));
+		lblHuesped.setBounds(70, 450, 290, 14);
+		panel.add(lblHuesped);
+
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setForeground(SystemColor.textHighlight);
+		separator_1.setBounds(70, 170, 290, 2);
+		separator_1.setBackground(SystemColor.textHighlight);
+		panel.add(separator_1);
+
+		JSeparator separator_2 = new JSeparator();
+		separator_2.setForeground(SystemColor.textHighlight);
+		separator_2.setBounds(70, 255, 290, 2);
+		separator_2.setBackground(SystemColor.textHighlight);
+		panel.add(separator_2);
+
+		JSeparator separator_3 = new JSeparator();
+		separator_3.setForeground(SystemColor.textHighlight);
+		separator_3.setBounds(70, 340, 290, 2);
+		separator_3.setBackground(SystemColor.textHighlight);
+		panel.add(separator_3);
+
+		JSeparator separator_4 = new JSeparator();
+		separator_4.setForeground(SystemColor.textHighlight);
+		separator_4.setBackground(SystemColor.textHighlight);
+		separator_4.setBounds(70, 425, 290, 2);
+		panel.add(separator_4);
+
+//		Campos que guardaremos en la base de datos
+		txtValor = new JTextField();
+		txtValor.setEditable(false);
+		txtValor.setBackground(SystemColor.text);
+		txtValor.setForeground(Color.BLACK);
+		txtValor.setBounds(70, 305, 290, 35);
+		txtValor.setFont(new Font("Roboto Black", Font.BOLD, 17));
+		txtValor.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		txtValor.setColumns(10);
+		panel.add(txtValor);
 		
-		
-		//Campos que guardaremos en la base de datos
 		txtFechaEntrada = new JDateChooser();
 		txtFechaEntrada.getCalendarButton().setBackground(SystemColor.textHighlight);
-		txtFechaEntrada.getCalendarButton().setIcon(new ImageIcon(RegistroReservas.class.getResource("/imagenes/icon-reservas.png")));
-		txtFechaEntrada.getCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 12));
-		txtFechaEntrada.setBounds(68, 161, 289, 35);
+		txtFechaEntrada.getCalendarButton()
+				.setIcon(new ImageIcon(RegistroReservas.class.getResource("/imagenes/icon-reservas.png")));
+		txtFechaEntrada.getCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 11));
+		txtFechaEntrada.setBounds(70, 135, 290, 35);
 		txtFechaEntrada.getCalendarButton().setBounds(268, 0, 21, 33);
 		txtFechaEntrada.setBackground(Color.WHITE);
-		txtFechaEntrada.setBorder(new LineBorder(SystemColor.window));
-		txtFechaEntrada.setDateFormatString("yyyy-MM-dd");
 		txtFechaEntrada.setFont(new Font("Roboto", Font.PLAIN, 18));
+		txtFechaEntrada.setDateFormatString("yyyy-MM-dd");
+		txtFechaEntrada.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				checkDates();
+			}
+		});
 		panel.add(txtFechaEntrada);
 
 		txtFechaSalida = new JDateChooser();
-		txtFechaSalida.getCalendarButton().setIcon(new ImageIcon(RegistroReservas.class.getResource("/imagenes/icon-reservas.png")));
+		txtFechaSalida.getCalendarButton().setBackground(SystemColor.textHighlight);
+		txtFechaSalida.getCalendarButton()
+				.setIcon(new ImageIcon(RegistroReservas.class.getResource("/imagenes/icon-reservas.png")));
 		txtFechaSalida.getCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 11));
-		txtFechaSalida.setBounds(68, 246, 289, 35);
-		txtFechaSalida.getCalendarButton().setBounds(267, 1, 21, 31);
+		txtFechaSalida.setBounds(70, 220, 290, 35);
+		txtFechaSalida.getCalendarButton().setBounds(268, 0, 21, 33);
 		txtFechaSalida.setBackground(Color.WHITE);
 		txtFechaSalida.setFont(new Font("Roboto", Font.PLAIN, 18));
+		txtFechaSalida.setDateFormatString("yyyy-MM-dd");
 		txtFechaSalida.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
-				//Activa el evento, después del usuario seleccionar las fechas se debe calcular el valor de la reserva
+				checkDates();
 			}
 		});
-		txtFechaSalida.setDateFormatString("yyyy-MM-dd");
-		txtFechaSalida.getCalendarButton().setBackground(SystemColor.textHighlight);
-		txtFechaSalida.setBorder(new LineBorder(new Color(255, 255, 255), 0));
 		panel.add(txtFechaSalida);
 
-		txtValor = new JTextField();
-		txtValor.setBackground(SystemColor.text);
-		txtValor.setForeground(Color.BLACK);
-		txtValor.setBounds(68, 328, 289, 33);
-		txtValor.setFont(new Font("Roboto Black", Font.BOLD, 17));
-		txtValor.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-		panel.add(txtValor);
-		txtValor.setColumns(10);
-
-
 		txtFormaPago = new JComboBox<String>();
-		txtFormaPago.setBounds(68, 417, 289, 38);
+		txtFormaPago.setBounds(70, 390, 290, 35);
 		txtFormaPago.setBackground(SystemColor.text);
 		txtFormaPago.setBorder(new LineBorder(new Color(255, 255, 255), 1, true));
 		txtFormaPago.setFont(new Font("Roboto", Font.PLAIN, 16));
-		txtFormaPago.setModel(new DefaultComboBoxModel<String>(new String[] {"Tarjeta de Crédito", "Tarjeta de Débito", "Dinero en efectivo"}));
+		txtFormaPago.setModel(new DefaultComboBoxModel<String>(
+				new String[] { "Tarjeta de Crédito", "Tarjeta de Débito", "Dinero en efectivo" }));
 		panel.add(txtFormaPago);
 
-		JPanel btnsiguiente = new JPanel();
-		btnsiguiente.setToolTipText("");
-		btnsiguiente.addMouseListener(new MouseAdapter() {
+		JPanel btnViejoHuesped = new JPanel();
+		btnViejoHuesped.setToolTipText("");
+		btnViejoHuesped.setLayout(null);
+		btnViejoHuesped.setBackground(SystemColor.textHighlight);
+		btnViejoHuesped.setBounds(70, 475, 130, 35);
+		btnViejoHuesped.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		btnViejoHuesped.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-//				TO DO: controlar que fechaSalida sea posterior a fechaEntrada
-				if (RegistroReservas.txtFechaEntrada.getDate() != null && RegistroReservas.txtFechaSalida.getDate() != null) {		
+//				TO DO: llevar a indice de huespedes para elegir
+			}
+		});
+		panel.add(btnViejoHuesped);
+
+		JLabel labelViejoHuesped = new JLabel("VIEJO");
+		labelViejoHuesped.setHorizontalAlignment(SwingConstants.CENTER);
+		labelViejoHuesped.setForeground(new Color(255, 255, 255));
+		labelViejoHuesped.setFont(new Font("Roboto", Font.PLAIN, 18));
+		labelViejoHuesped.setBounds(0, 0, 130, 35);
+		btnViejoHuesped.add(labelViejoHuesped);
+		
+		JPanel btnNuevoHuesped = new JPanel();
+		btnNuevoHuesped.setToolTipText("");
+		btnNuevoHuesped.setLayout(null);
+		btnNuevoHuesped.setBackground(SystemColor.textHighlight);
+		btnNuevoHuesped.setBounds(230, 475, 130, 35);
+		btnNuevoHuesped.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		btnNuevoHuesped.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+//				TO DO: ¿por que mierda no me sale bien ese if?
+				if (RegistroReservas.txtFechaEntrada.getDate() != null
+						&& RegistroReservas.txtFechaSalida.getDate() != null) {
 					RegistroHuesped registro = new RegistroHuesped(RegistroReservas.this);
 					registro.setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
 				}
-			}						
+			}
 		});
-		btnsiguiente.setLayout(null);
-		btnsiguiente.setBackground(SystemColor.textHighlight);
-		btnsiguiente.setBounds(238, 493, 122, 35);
-		panel.add(btnsiguiente);
-		btnsiguiente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-		
-		JLabel labelSiguiente = new JLabel("SIGUIENTE");
-		labelSiguiente.setHorizontalAlignment(SwingConstants.CENTER);
-		labelSiguiente.setForeground(new Color(255, 255, 255));
-		labelSiguiente.setFont(new Font("Roboto", Font.PLAIN, 18));
-		labelSiguiente.setBounds(0, 0, 122, 35);
-		btnsiguiente.add(labelSiguiente);
+		panel.add(btnNuevoHuesped);
 
-
+		JLabel labelNuevoHuesped = new JLabel("NUEVO");
+		labelNuevoHuesped.setHorizontalAlignment(SwingConstants.CENTER);
+		labelNuevoHuesped.setForeground(new Color(255, 255, 255));
+		labelNuevoHuesped.setFont(new Font("Roboto", Font.PLAIN, 18));
+		labelNuevoHuesped.setBounds(0, 0, 130, 35);
+		btnNuevoHuesped.add(labelNuevoHuesped);
 	}
-		
-	//Código que permite mover la ventana por la pantalla según la posición de "x" y "y"	
-	 private void headerMousePressed(java.awt.event.MouseEvent evt) {
-	        xMouse = evt.getX();
-	        yMouse = evt.getY();
-	    }
+	
+	private void checkDates() {
+		if (txtFechaEntrada.getDate() != null && txtFechaSalida.getDate() != null) {
+			Date dateIn = txtFechaEntrada.getDate();
+			Date dateOut = txtFechaSalida.getDate();
+			Integer daysDifference = (int) TimeUnit.MILLISECONDS.toDays(dateOut.getTime() - dateIn.getTime());
+			if (dateOut.after(dateIn)) {
+				ReservePrice rp = new ReservePrice(daysDifference);
+				txtValor.setText("$ " + rp.getTotalPrice().toString());				
+			} else {
+				txtValor.setText("");
+			}
+		}
+	}
 
-	    private void headerMouseDragged(java.awt.event.MouseEvent evt) {
-	        int x = evt.getXOnScreen();
-	        int y = evt.getYOnScreen();
-	        this.setLocation(x - xMouse, y - yMouse);
-}
+//	Código que permite mover la ventana por la pantalla según la posición de "x" e "y"
+	private void headerMousePressed(java.awt.event.MouseEvent evt) {
+		xMouse = evt.getX();
+		yMouse = evt.getY();
+	}
+
+	private void headerMouseDragged(java.awt.event.MouseEvent evt) {
+		int x = evt.getXOnScreen();
+		int y = evt.getYOnScreen();
+		this.setLocation(x - xMouse, y - yMouse);
+	}
 }

@@ -1,0 +1,24 @@
+package utils;
+
+import java.math.BigDecimal;
+
+public class ValueCalculator {
+
+	BigDecimal dayPrice;
+	Integer dayAmount;
+	BigDecimal totalPrice;
+	
+	public ValueCalculator(Integer dayAmount) {
+		this.dayPrice = new BigDecimal(dayPrice);
+		this.dayAmount = dayAmount;
+	}
+
+	public void setDayPrice(String dayPrice) {
+		this.dayPrice = new BigDecimal(dayPrice);
+	}
+
+	public BigDecimal getTotalPrice() {
+		totalPrice = new BigDecimal(dayAmount).multiply(dayPrice);
+		return totalPrice;
+	}
+}
