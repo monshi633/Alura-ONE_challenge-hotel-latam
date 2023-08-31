@@ -7,16 +7,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import java.awt.Color;
 import com.toedter.calendar.JDateChooser;
-
 import factory.ConnectionFactory;
 import model.Guests;
 import model.Reserves;
-
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import javax.swing.ImageIcon;
 import java.awt.SystemColor;
@@ -25,23 +22,25 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.awt.Toolkit;
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 @SuppressWarnings("serial")
 public class RegistroHuesped extends JFrame {
 
 	private static RegistroReservas reservas;
 	private JPanel contentPane;
-	private static JTextField txtNombre;
-	private static JTextField txtApellido;
-	private static JTextField txtTelefono;
+	private JTextField txtNombre;
+	private JTextField txtApellido;
+	private JTextField txtTelefono;
 //	private static JTextField txtNreserva;
-	private static JDateChooser txtFechaN;
-	private static JComboBox<Format> txtNacionalidad;
+	private JDateChooser txtFechaN;
+	private JComboBox<String> txtNacionalidad;
+	private String selectedNationality = "";
 	private JLabel labelExit;
 	private JLabel labelAtras;
 	int xMouse, yMouse;
@@ -69,7 +68,7 @@ public class RegistroHuesped extends JFrame {
 	public RegistroHuesped(final RegistroReservas reservas) {
 		super("Registro huésped - Hotel Alura");
 		RegistroHuesped.reservas = reservas;
-		
+
 		setIconImage(
 				Toolkit.getDefaultToolkit().getImage(RegistroHuesped.class.getResource("/imagenes/lOGO-50PX.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -113,11 +112,13 @@ public class RegistroHuesped extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				dispose();
 			}
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				btnAtras.setBackground(Color.white);
 				labelAtras.setForeground(Color.black);
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnAtras.setBackground(new Color(12, 138, 199));
@@ -165,7 +166,7 @@ public class RegistroHuesped extends JFrame {
 		txtNacionalidad.setBackground(SystemColor.text);
 		txtNacionalidad.setFont(new Font("Roboto", Font.PLAIN, 16));
 //		TO DO: emprolijar esto...
-		txtNacionalidad.setModel(new DefaultComboBoxModel(new String[] { "afgano-afgana", "alemán-", "alemana",
+		txtNacionalidad.setModel(new DefaultComboBoxModel<>(new String[] { "afgano-afgana", "aleman-alemana",
 				"árabe-árabe", "argentino-argentina", "australiano-australiana", "belga-belga", "boliviano-boliviana",
 				"brasileño-brasileña", "camboyano-camboyana", "canadiense-canadiense", "chileno-chilena", "chino-china",
 				"colombiano-colombiana", "coreano-coreana", "costarricense-costarricense", "cubano-cubana",
@@ -181,7 +182,15 @@ public class RegistroHuesped extends JFrame {
 				"puertorriqueño-puertorriqueño", "dominicano-dominicana", "rumano-rumana", "ruso-rusa", "sueco-sueca",
 				"suizo-suiza", "tailandés-tailandesa", "taiwanes-taiwanesa", "turco-turca", "ucraniano-ucraniana",
 				"uruguayo-uruguaya", "venezolano-venezolana", "vietnamita-vietnamita" }));
-		String selectedNationality = (String) txtNacionalidad.getSelectedItem();
+		txtNacionalidad.setSelectedIndex(-1);
+		txtNacionalidad.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					JComboBox cb = (JComboBox) e.getSource();
+					selectedNationality = (String) cb.getSelectedItem();
+				}
+			}
+		});
 		contentPane.add(txtNacionalidad);
 
 		JLabel lblNombre = new JLabel("NOMBRE");
@@ -284,26 +293,25 @@ public class RegistroHuesped extends JFrame {
 		btnguardar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (RegistroHuesped.txtNombre.getText() != null && RegistroHuesped.txtFechaN.getDate() != null) {
-//					TO DO: guardar en base de datos
+				if (!txtNombre.getText().isEmpty()
+						&& !txtApellido.getText().isEmpty()
+						&& txtFechaN.getDate() != null
+						&& selectedNationality != ""
+						&& !txtTelefono.getText().isEmpty()) {
+					
 					ConnectionFactory factory = new ConnectionFactory();
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					try {
 						Connection con = factory.createConnection();
 						Guests guests = new Guests(con);
 						Reserves reserves = new Reserves(con);
-//						TO DO: Casi perfecto, están fallando los get de contenido de los drop down selectedNationality y selectedPayment
 						reserves.createReserve(
-								guests.createGuest(
-										txtNombre.getText().toString(),
-										txtApellido.getText().toString(),
-										sdf.format(txtFechaN.getDate()).toString(),
-										selectedNationality,
+								guests.createGuest(txtNombre.getText().toString(), txtApellido.getText().toString(),
+										sdf.format(txtFechaN.getDate()).toString(), selectedNationality,
 										txtTelefono.getText().toString()),
 								sdf.format(reservas.txtFechaEntrada.getDate()).toString(),
 								sdf.format(reservas.txtFechaSalida.getDate()).toString(),
-								reservas.txtValor.getText().toString(),
-								reservas.selectedPayment);
+								reservas.txtValor.getText().toString(), reservas.selectedPayment);
 						con.close();
 					} catch (SQLException e1) {
 						e1.printStackTrace();
@@ -311,7 +319,7 @@ public class RegistroHuesped extends JFrame {
 					reservas.dispose();
 					dispose();
 					Exito exito = new Exito();
-					exito.setVisible(true);			
+					exito.setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
 				}
@@ -355,11 +363,13 @@ public class RegistroHuesped extends JFrame {
 				reservas.dispose();
 				dispose();
 			}
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				btnexit.setBackground(Color.red);
 				labelExit.setForeground(Color.white);
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnexit.setBackground(Color.white);
@@ -378,7 +388,8 @@ public class RegistroHuesped extends JFrame {
 		labelExit.setFont(new Font("Roboto", Font.PLAIN, 18));
 	}
 
-	// Código que permite mover la ventana por la pantalla según la posición de "x" y "y"
+	// Código que permite mover la ventana por la pantalla según la posición de "x"
+	// y "y"
 	private void headerMousePressed(java.awt.event.MouseEvent evt) {
 		xMouse = evt.getX();
 		yMouse = evt.getY();

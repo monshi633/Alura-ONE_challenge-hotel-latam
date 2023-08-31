@@ -15,6 +15,9 @@ import utils.ReservePrice;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -30,12 +33,12 @@ import javax.swing.border.LineBorder;
 @SuppressWarnings("serial")
 public class RegistroReservas extends JFrame {
 
-	protected String selectedPayment = null;
 	private JPanel contentPane;
-	public JTextField txtValor;
-	public JDateChooser txtFechaEntrada;
-	public JDateChooser txtFechaSalida;
-	public static JComboBox<String> txtFormaPago;
+	protected JTextField txtValor;
+	protected JDateChooser txtFechaEntrada;
+	protected JDateChooser txtFechaSalida;
+	protected JComboBox<String> txtFormaPago;
+	protected String selectedPayment = "";
 	int xMouse, yMouse;
 	private JLabel labelExit;
 	private JLabel labelAtras;
@@ -296,9 +299,18 @@ public class RegistroReservas extends JFrame {
 		txtFormaPago.setBackground(SystemColor.text);
 		txtFormaPago.setBorder(new LineBorder(new Color(255, 255, 255), 1, true));
 		txtFormaPago.setFont(new Font("Roboto", Font.PLAIN, 16));
-		txtFormaPago.setModel(new DefaultComboBoxModel<String>(
-				new String[] { "Tarjeta de Crédito", "Tarjeta de Débito", "Dinero en efectivo" }));
-		selectedPayment = (String) txtFormaPago.getSelectedItem();
+		txtFormaPago.setModel(new DefaultComboBoxModel<>(new String[] {
+				"Tarjeta de Crédito", "Tarjeta de Débito", "Dinero en efectivo"
+				}));
+		txtFormaPago.setSelectedIndex(-1);
+		txtFormaPago.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					JComboBox<?> cb = (JComboBox<?>) e.getSource();
+					selectedPayment = (String) cb.getSelectedItem();
+				}
+			}
+		});
 		panel.add(txtFormaPago);
 
 //		JPanel btnViejoHuesped = new JPanel();
@@ -333,7 +345,8 @@ public class RegistroReservas extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				if (txtFechaEntrada.getDate() != null
 						&& txtFechaSalida.getDate() != null
-						&& !txtValor.getText().isEmpty()) {
+						&& !txtValor.getText().isEmpty()
+						&& selectedPayment != "") {
 					RegistroHuesped registro = new RegistroHuesped(RegistroReservas.this);
 					registro.setVisible(true);
 				} else {

@@ -30,7 +30,7 @@ public class Guests {
 		ResultSet rst = stm.getGeneratedKeys();
 		while(rst.next()) {
 			id = rst.getInt(1);
-//			System.out.println("New guest inserted with id: " + id);
+			System.out.println("New guest inserted with id: " + id);
 		}
 		return id;
 	}
