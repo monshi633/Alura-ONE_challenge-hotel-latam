@@ -17,7 +17,7 @@ public class Reserves {
 	}
 
 	public Integer createReserve(Integer huespedId, String fechaEntrada, String fechaSalida, String valor,	String formaPago) throws SQLException {
-		// tengo que poner un try/catch por si el huespedId no existe
+//		 tengo que poner un try/catch por si el huespedId no existe?
 		String statement = "INSERT INTO reservas (huesped_id, fechaEntrada, fechaSalida, valor, formaPago) VALUES (?, ?, ?, ?, ?)";
 		PreparedStatement stm = con.prepareStatement(statement, Statement.RETURN_GENERATED_KEYS);
 

@@ -205,7 +205,7 @@ public class RegistroReserva extends JFrame {
 		lblFormaPago.setFont(new Font("Roboto Black", Font.PLAIN, 18));
 		panel.add(lblFormaPago);
 
-		JLabel lblHuesped = new JLabel("HUÃ‰SPED");
+		JLabel lblHuesped = new JLabel("HUÉSPED");
 		lblHuesped.setForeground(SystemColor.textInactiveText);
 		lblHuesped.setFont(new Font("Roboto Black", Font.PLAIN, 18));
 		lblHuesped.setBounds(70, 450, 290, 14);
@@ -286,7 +286,7 @@ public class RegistroReserva extends JFrame {
 		txtFormaPago.setBorder(new LineBorder(new Color(255, 255, 255), 1, true));
 		txtFormaPago.setFont(new Font("Roboto", Font.PLAIN, 16));
 		txtFormaPago.setModel(new DefaultComboBoxModel<>(new String[] {
-				"Tarjeta de CrÃ©dito", "Tarjeta de DÃ©bito", "Dinero en efectivo"
+				"Tarjeta de crédito", "Tarjeta de débito", "Dinero en efectivo", "Bitcoin"
 				}));
 		txtFormaPago.setSelectedIndex(-1);
 		txtFormaPago.addItemListener(new ItemListener() {
@@ -299,6 +299,7 @@ public class RegistroReserva extends JFrame {
 		});
 		panel.add(txtFormaPago);
 
+//		TO DO:
 //		JPanel btnViejoHuesped = new JPanel();
 //		btnViejoHuesped.setToolTipText("");
 //		btnViejoHuesped.setLayout(null);
