@@ -270,7 +270,7 @@ public class Login extends JFrame {
 		String inputPassword = new String(txtContrasena.getPassword());
 
 		if (txtUsuario.getText().equals(username) && inputPassword.equals(password)) {
-			MenuUsuario menu = new MenuUsuario();
+			MenuPrincipal menu = new MenuPrincipal();
 			menu.setVisible(true);
 			dispose();
 		} else {

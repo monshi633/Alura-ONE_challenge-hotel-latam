@@ -12,3 +12,11 @@
 1693349718583	Rename type 'DatabaseCredentials'
 1693350452352	Rename local variable 'format'
 1693351839398	Rename local variable 'selectedValue'
+1693493537582	Rename type 'RegistroReservas'
+1693493971119	Rename local variable 'lblNewLabel'
+1693493988890	Rename local variable 'lblNewLabel_1'
+1693493997188	Rename local variable 'lblNewLabel_1'
+1693503762408	Delete element
+1693503769108	Delete element
+1693503923437	Rename type 'MenuPrincipal'
+1693503933981	Rename type 'MenuUsuario'

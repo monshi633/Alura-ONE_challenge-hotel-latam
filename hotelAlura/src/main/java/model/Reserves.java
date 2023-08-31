@@ -10,12 +10,13 @@ import java.sql.Statement;
 public class Reserves {
 
 	Connection con;
+	Integer id;
 
 	public Reserves(Connection con) {
 		this.con = con;
 	}
 
-	public void createReserve(Integer huespedId, String fechaEntrada, String fechaSalida, String valor,	String formaPago) throws SQLException {
+	public Integer createReserve(Integer huespedId, String fechaEntrada, String fechaSalida, String valor,	String formaPago) throws SQLException {
 		// tengo que poner un try/catch por si el huespedId no existe
 		String statement = "INSERT INTO reservas (huesped_id, fechaEntrada, fechaSalida, valor, formaPago) VALUES (?, ?, ?, ?, ?)";
 		PreparedStatement stm = con.prepareStatement(statement, Statement.RETURN_GENERATED_KEYS);
@@ -29,9 +30,10 @@ public class Reserves {
 
 		ResultSet rst = stm.getGeneratedKeys();
 		while (rst.next()) {
-			Integer id = rst.getInt(1);
+			id = rst.getInt(1);
 			System.out.println("New reserve inserted with id = " + id);
 		}
+		return id;
 	}
 
 	public void readReserve(Integer id) throws SQLException {

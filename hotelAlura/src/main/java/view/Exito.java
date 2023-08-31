@@ -27,7 +27,8 @@ public class Exito extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			Exito dialog = new Exito();
+			Integer nReserve = 0;
+			Exito dialog = new Exito(nReserve);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -37,48 +38,52 @@ public class Exito extends JDialog {
 
 	/**
 	 * Create the dialog.
+	 * 
+	 * @param nReserve
 	 */
-	public Exito() {
+	public Exito(Integer nReserve) {
+		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Exito.class.getResource("/imagenes/aH-40px.png")));
-		setBounds(100, 100, 394, 226);
-		getContentPane().setLayout(new BorderLayout());
+		setBounds(100, 100, 400, 230);
+		setLocationRelativeTo(null);
 		contentPanel.setBackground(SystemColor.control);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		setLocationRelativeTo(null);
 		contentPanel.setLayout(null);
-		{
-			JLabel lblNewLabel = new JLabel("");
-			lblNewLabel.setIcon(new ImageIcon(Exito.class.getResource("/imagenes/Ha-100px.png")));
-			lblNewLabel.setBounds(139, 11, 100, 100);
-			contentPanel.add(lblNewLabel);
-		}
-		{
-			JLabel lblNewLabel_1 = new JLabel("Datos guardados satisfactoriamente");
-			lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-			lblNewLabel_1.setForeground(new Color (12, 138, 199));
-			lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 18));
-			lblNewLabel_1.setBounds(0, 122, 378, 21);
-			contentPanel.add(lblNewLabel_1);
-		}
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton okButton = new JButton("OK");
-				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						dispose();//sirve para cerrar la ventana actual
-						MenuUsuario usuario = new MenuUsuario(); 
-						usuario.setVisible(true);
-					}
-				});
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
-			}
-		}
-	}
+		getContentPane().setLayout(new BorderLayout());
+		getContentPane().add(contentPanel, BorderLayout.CENTER);
 
+		JLabel lblImg = new JLabel("");
+		lblImg.setIcon(new ImageIcon(Exito.class.getResource("/imagenes/Ha-100px.png")));
+		lblImg.setBounds(139, 4, 100, 100);
+		contentPanel.add(lblImg);
+
+		JLabel lblLine_1 = new JLabel("Datos guardados satisfactoriamente");
+		lblLine_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLine_1.setForeground(new Color(12, 138, 199));
+		lblLine_1.setFont(new Font("Arial", Font.BOLD, 18));
+		lblLine_1.setBounds(0, 108, 378, 21);
+		contentPanel.add(lblLine_1);
+
+		JLabel lblLine_2 = new JLabel("Número de reserva: " + nReserve);
+		lblLine_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLine_2.setForeground(new Color(12, 138, 199));
+		lblLine_2.setFont(new Font("Arial", Font.BOLD, 18));
+		lblLine_2.setBounds(0, 133, 378, 21);
+		contentPanel.add(lblLine_2);
+
+		JPanel buttonPane = new JPanel();
+		buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
+		getContentPane().add(buttonPane, BorderLayout.SOUTH);
+		JButton okButton = new JButton("OK");
+		okButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();// sirve para cerrar la ventana actual
+				MenuPrincipal usuario = new MenuPrincipal();
+				usuario.setVisible(true);
+			}
+		});
+		okButton.setActionCommand("OK");
+		buttonPane.add(okButton);
+		getRootPane().setDefaultButton(okButton);
+	}
 }
