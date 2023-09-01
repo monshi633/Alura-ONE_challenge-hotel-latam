@@ -6,8 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
-public class Guests {
+public class Guests{
 
 	Connection con;
 	Integer id;
@@ -30,33 +31,43 @@ public class Guests {
 		ResultSet rst = stm.getGeneratedKeys();
 		while(rst.next()) {
 			id = rst.getInt(1);
-			System.out.println("New guest inserted with id: " + id);
+//			System.out.println("New guest inserted with id: " + id);
 		}
 		return id;
 	}
 
-	public void readGuest(Integer id) throws SQLException {
-		//Agregar try/catch por si no existe el id
-		String statement = "SELECT * FROM huespedes WHERE id = ?";
+	public Vector<String> readGuest(String apellido) throws SQLException {
+		Vector<String> vector = new Vector<>();
+		
+		String statement = "SELECT * FROM huespedes WHERE apellido = ?";
 		PreparedStatement stm = con.prepareStatement(statement);
 		
-		stm.setInt(1, id);
+		stm.setString(1, apellido);
 		stm.execute();
 		
 		ResultSet rst = stm.executeQuery();
 		while(rst.next()) {
+			String id = rst.getString("id");
 			String nombre = rst.getString("nombre");
-			String apellido = rst.getString("apellido");
 			String fechaNacimiento = rst.getString("fechaNacimiento");
 			String nacionalidad = rst.getString("nacionalidad");
 			String telefono = rst.getString("telefono");
-			System.out.println("Guest id: " + id + "\n" 
-					+ "Guest nombre: " + nombre + "\n" 
-					+ "Guest apellido: " + apellido + "\n" 
-					+ "Guest fecha de nacimiento: " + fechaNacimiento + "\n"
-					+ "Guest nacionalidad: " + nacionalidad + "\n"
-					+ "Guest telefono: " + telefono);
+			
+			vector.add(id);
+			vector.add(nombre);
+			vector.add(apellido);
+			vector.add(fechaNacimiento);
+			vector.add(nacionalidad);
+			vector.add(telefono);
+
+//			System.out.println("Guest id: " + id + "\n" 
+//					+ "Guest nombre: " + nombre + "\n" 
+//					+ "Guest apellido: " + apellido + "\n" 
+//					+ "Guest fecha de nacimiento: " + fechaNacimiento + "\n"
+//					+ "Guest nacionalidad: " + nacionalidad + "\n"
+//					+ "Guest telefono: " + telefono);
 		}
+		return vector;
 	}
 
 	public void updateGuest(Integer id, String nombre, String apellido, String fechaNacimiento, String nacionalidad, String telefono) throws SQLException {
@@ -80,9 +91,6 @@ public class Guests {
 	}
 
 	public void deleteGuest(Integer id) throws SQLException {
-		System.out.println("Deleting guest:");
-		readGuest(id);
-		
 		String statement = "DELETE FROM huespedes WHERE id = ?";
 		PreparedStatement stm = con.prepareStatement(statement);
 		
