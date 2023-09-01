@@ -17,7 +17,7 @@ public class TestReserves {
 		reserves.createReserve(40, "2022-02-02", "2022-02-03", "1", "efectivo");
 		reserves.readReserve(3);
 		reserves.updateReserve(3, 2, "2019-01-01", "2019-01-03", "2", "tarjeta");
-		reserves.deleteReserve(3);
+		reserves.deleteReserveId(3);
 	}
 
 }

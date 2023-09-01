@@ -91,11 +91,19 @@ public class Reserves {
 	    }
 	}
 
-	public void deleteReserve(Integer id) throws SQLException {
+	public void deleteReserveId(Integer id) throws SQLException {
 		String statement = "DELETE FROM reservas WHERE id = ?";
 		PreparedStatement stm = con.prepareStatement(statement);
 		
 		stm.setInt(1, id);
+		stm.executeUpdate();
+	}
+	
+	public void deleteReserveGuestId(Integer huespedId) throws SQLException {
+		String statement = "DELETE FROM reservas WHERE huesped_id = ?";
+		PreparedStatement stm = con.prepareStatement(statement);
+		
+		stm.setInt(1, huespedId);
 		stm.executeUpdate();
 	}
 }
