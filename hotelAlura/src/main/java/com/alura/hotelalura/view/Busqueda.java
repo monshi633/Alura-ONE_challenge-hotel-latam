@@ -1,4 +1,4 @@
-package view;
+package com.alura.hotelalura.view;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
@@ -6,9 +6,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import factory.ConnectionFactory;
-import model.Guests;
-import model.Reserves;
+import com.alura.hotelalura.controller.GuestController;
+import com.alura.hotelalura.controller.ReserveController;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
@@ -26,8 +25,6 @@ import javax.swing.ListSelectionModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
@@ -233,7 +230,6 @@ public class Busqueda extends JFrame {
 		tbReserves.setFont(new Font("Roboto", Font.PLAIN, 16));
 		modelReserves = (DefaultTableModel) tbReserves.getModel();
 		modelReserves.addColumn("Numero de Reserva");
-		modelReserves.addColumn("Número de Huesped");
 		modelReserves.addColumn("Fecha Check In");
 		modelReserves.addColumn("Fecha Check Out");
 		modelReserves.addColumn("Valor");
@@ -301,105 +297,83 @@ public class Busqueda extends JFrame {
 		btnEliminar.add(lblEliminar);
 	}
 
-	private void updateToDB(int tab) {
-		ConnectionFactory factory = new ConnectionFactory();
-		try {
-			Connection con = factory.createConnection();
-			if (tab == 0 && tbReserves.getSelectedRow() != -1) {
-				Integer index = tbReserves.getSelectedRow();
-
-				Integer id = Integer.valueOf(tbReserves.getValueAt(index, 0).toString());
-				Integer huespedId = Integer.valueOf(tbReserves.getValueAt(index, 1).toString());
-				String fechaEntrada = tbReserves.getValueAt(index, 2).toString();
-				String fechaSalida = tbReserves.getValueAt(index, 3).toString();
-				String valor = tbReserves.getValueAt(index, 4).toString();
-				String formaPago = tbReserves.getValueAt(index, 5).toString();
-
-				Reserves reserves = new Reserves(con);
-				reserves.updateReserve(id, huespedId, fechaEntrada, fechaSalida, valor, formaPago);
-				JOptionPane.showMessageDialog(null, "Reserva actualizada.");
-			} else if (tab == 1 && tbGuests.getSelectedRow() != -1) {
-				Integer index = tbGuests.getSelectedRow();
-
-				Integer id = Integer.valueOf(tbGuests.getValueAt(index, 0).toString());
-				String nombre = tbGuests.getValueAt(index, 1).toString();
-				String apellido = tbGuests.getValueAt(index, 2).toString();
-				String fechaNacimiento = tbGuests.getValueAt(index, 3).toString();
-				String nacionalidad = tbGuests.getValueAt(index, 4).toString();
-				String telefono = tbGuests.getValueAt(index, 5).toString();
-				
-				Guests guests = new Guests(con);
-				guests.updateGuest(id, nombre, apellido, fechaNacimiento, nacionalidad, telefono);
-				JOptionPane.showMessageDialog(null, "Huesped actualizado.");
-			}
-			con.close();
-		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, "Algo salió mal.");
-			e.printStackTrace();
-		}
-	}
-
 	private void readFromDB(String input) {
 //		TO DO: que pasa cuando hay más de un apellido? como traigo más de una fila? busco por nombre y apellido juntos?
 //		o también cuando llamo a un valor que ya fue llamado anteriormente
-		ConnectionFactory factory = new ConnectionFactory();
-		try {
-			Connection con = factory.createConnection();
-			if (input.matches("\\d+")) {
-				Integer reserveNumber = Integer.parseInt(input);
-				Reserves reserves = new Reserves(con);
+		if (input.matches("\\d+")) { // input is a number
+			ReserveController rc = new ReserveController();
+			Integer reserveNumber = Integer.parseInt(input);
 //				TO DO: limitar addRow si esa fila ya existiera
-				if (!reserves.readReserve(reserveNumber).isEmpty()) {
-					modelReserves.addRow(reserves.readReserve(reserveNumber));
-				}
-			} else {
-				Guests guests = new Guests(con);
-//				TO DO: limitar addRow si esa fila ya existiera
-				if (!guests.readGuest(input).isEmpty()) {
-					modelGuests.addRow(guests.readGuest(input));
-				}
+			if (!rc.readReserve(reserveNumber).isEmpty()) {
+				modelReserves.addRow(rc.readReserve(reserveNumber));
 			}
-			con.close();
-		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(null, "Entrada inválida.");
-			e.printStackTrace();
-		} catch (SQLException el) {
-			JOptionPane.showMessageDialog(null, "Algo salió mal.");
-			el.printStackTrace();
+		} else if (input.matches("[a-zA-Z ]+")){
+			GuestController gc = new GuestController();
+//				TO DO: limitar addRow si esa fila ya existiera
+			if (!gc.readGuest(input).isEmpty()) {
+				modelGuests.addRow(gc.readGuest(input));
+			}
+		}
+	}
+	
+	private void updateToDB(int tab) {
+		if (tab == 0 && tbReserves.getSelectedRow() != -1) {
+			Integer index = tbReserves.getSelectedRow();
+
+			Integer id = Integer.valueOf(tbReserves.getValueAt(index, 0).toString());
+			Integer guestId = Integer.valueOf(tbReserves.getValueAt(index, 1).toString());
+			String dateIn = tbReserves.getValueAt(index, 2).toString();
+			String dateOut = tbReserves.getValueAt(index, 3).toString();
+			String price = tbReserves.getValueAt(index, 4).toString();
+			String paymentMethod = tbReserves.getValueAt(index, 5).toString();
+			
+			ReserveController rc = new ReserveController();
+			rc.updateReserve(id, guestId, dateIn, dateOut, price, paymentMethod);
+			
+			JOptionPane.showMessageDialog(null, "Reserva actualizada.");
+		} else if (tab == 1 && tbGuests.getSelectedRow() != -1) {
+			Integer index = tbGuests.getSelectedRow();
+
+			Integer id = Integer.valueOf(tbGuests.getValueAt(index, 0).toString());
+			String name = tbGuests.getValueAt(index, 1).toString();
+			String lastName = tbGuests.getValueAt(index, 2).toString();
+			String birthDate = tbGuests.getValueAt(index, 3).toString();
+			String nationality = tbGuests.getValueAt(index, 4).toString();
+			String phone = tbGuests.getValueAt(index, 5).toString();
+			
+			GuestController gc = new GuestController();
+			gc.updateGuest(id, name, lastName, birthDate, nationality, phone);
+			
+			JOptionPane.showMessageDialog(null, "Huesped actualizado.");
 		}
 	}
 
 	/*
 	 * When an int is entered, it deletes a reserve with matching id
-	 * When a string is entered, it deletes a guests with matching id
+	 * When a string is entered, it deletes a guest with matching id
 	 * AND all the reserves linked to that guest id
 	 */
 	private void deleteFromDB(Integer tab) {
-		ConnectionFactory factory = new ConnectionFactory();
-		try {
-			Connection con = factory.createConnection();
-			Reserves reserves = new Reserves(con);
-			if (tab == 0 && tbReserves.getSelectedRow() != -1) {
-				Object selectedValue = tbReserves.getValueAt(tbReserves.getSelectedRow(), 0);
-				Integer toDelete = Integer.parseInt(selectedValue.toString());
-				reserves.deleteReserveId(toDelete);
-				
-				modelReserves.removeRow(tbReserves.getSelectedRow());
-				JOptionPane.showMessageDialog(null, "Reserva eliminada.");
-			} else if (tab == 1 && tbGuests.getSelectedRow() != -1) {
-				Guests guests = new Guests(con);
-				Object selectedValue = tbGuests.getValueAt(tbGuests.getSelectedRow(), 0);
-				Integer toDelete = Integer.parseInt(selectedValue.toString());
-				guests.deleteGuest(toDelete);
-				reserves.deleteReserveGuestId(toDelete);
+		ReserveController rc = new ReserveController();
+		if (tab == 0 && tbReserves.getSelectedRow() != -1) {
+			Object selectedValue = tbReserves.getValueAt(tbReserves.getSelectedRow(), 0);
+			Integer id = Integer.parseInt(selectedValue.toString());
+			
+			rc.deleteReserveId(id);
+			
+			modelReserves.removeRow(tbReserves.getSelectedRow());
+			JOptionPane.showMessageDialog(null, "Reserva eliminada.");
+		} else if (tab == 1 && tbGuests.getSelectedRow() != -1) {
+			GuestController gc = new GuestController();
+			
+			Object selectedValue = tbGuests.getValueAt(tbGuests.getSelectedRow(), 0);
+			Integer id = Integer.parseInt(selectedValue.toString());
+			
+			gc.deleteGuest(id);
+			rc.deleteReserveGuestId(id);
 
-				modelGuests.removeRow(tbGuests.getSelectedRow());
-				JOptionPane.showMessageDialog(null, "Huesped eliminado.");
-			}
-			con.close();
-		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, "Algo salió mal.");
-			e.printStackTrace();
+			modelGuests.removeRow(tbGuests.getSelectedRow());
+			JOptionPane.showMessageDialog(null, "Huesped eliminado junto con todas sus reservas.");
 		}
 	}
 

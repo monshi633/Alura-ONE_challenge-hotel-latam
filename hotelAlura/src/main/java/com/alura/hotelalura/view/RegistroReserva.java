@@ -1,4 +1,4 @@
-package view;
+package com.alura.hotelalura.view;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
@@ -10,8 +10,10 @@ import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.JTextField;
+
+import com.alura.hotelalura.utils.ReservePrice;
 import com.toedter.calendar.JDateChooser;
-import utils.ReservePrice;
+
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -356,7 +358,7 @@ public class RegistroReserva extends JFrame {
 			Date dateIn = txtFechaEntrada.getDate();
 			Date dateOut = txtFechaSalida.getDate();
 			Integer daysDifference = (int) TimeUnit.MILLISECONDS.toDays(dateOut.getTime() - dateIn.getTime());
-//			TO DO: Cuando borro una fecha a mano el txtValor deberÃ­a ser ""
+//			TO DO: Cuando borro una fecha a mano el txtValor debería ser ""
 			if (dateOut.after(dateIn)|| dateOut.equals(dateIn)) {
 				ReservePrice rp = new ReservePrice(daysDifference);
 				txtValor.setText("$ " + rp.getTotalPrice().toString());

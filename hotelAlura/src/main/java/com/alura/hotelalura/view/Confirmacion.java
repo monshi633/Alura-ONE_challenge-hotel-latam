@@ -1,4 +1,4 @@
-package view;
+package com.alura.hotelalura.view;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -56,7 +56,7 @@ public class Confirmacion extends JDialog {
 			contentPanel.add(lblNewLabel);
 		}
 		{
-			JLabel lblNewLabel_1 = new JLabel("Â¿Desea salir del programa?");
+			JLabel lblNewLabel_1 = new JLabel("¿Desea salir del programa?");
 			lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel_1.setForeground(new Color(12, 138, 199));
 			lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 18));
@@ -73,7 +73,7 @@ public class Confirmacion extends JDialog {
 				JButton btnSi = new JButton("Si");
 				btnSi.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						dispose();// sirve para cerrar la ventana actual
+						dispose();
 						System.exit(0);
 					}
 				});

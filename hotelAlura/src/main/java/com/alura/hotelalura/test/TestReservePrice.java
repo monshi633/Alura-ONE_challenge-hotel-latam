@@ -1,6 +1,6 @@
-package test;
+package com.alura.hotelalura.test;
 
-import utils.ReservePrice;
+import com.alura.hotelalura.utils.ReservePrice;
 
 public class TestReservePrice {
 

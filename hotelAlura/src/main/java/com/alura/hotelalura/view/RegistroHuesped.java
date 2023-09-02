@@ -1,4 +1,4 @@
-package view;
+package com.alura.hotelalura.view;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
@@ -6,10 +6,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import java.awt.Color;
+import com.alura.hotelalura.controller.GuestController;
+import com.alura.hotelalura.controller.ReserveController;
+import com.alura.hotelalura.model.Guest;
+import com.alura.hotelalura.model.Reserve;
 import com.toedter.calendar.JDateChooser;
-import factory.ConnectionFactory;
-import model.Guests;
-import model.Reserves;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
@@ -19,8 +20,6 @@ import javax.swing.ImageIcon;
 import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.awt.Toolkit;
 import javax.swing.SwingConstants;
@@ -64,7 +63,7 @@ public class RegistroHuesped extends JFrame {
 	 * Create the frame.
 	 */
 	public RegistroHuesped(final RegistroReserva reservas) {
-		super("Registro huÃ©sped - Hotel Alura");
+		super("Registro huésped - Hotel Alura");
 		RegistroHuesped.reservas = reservas;
 
 		setResizable(false);
@@ -314,27 +313,32 @@ public class RegistroHuesped extends JFrame {
 	}
 	
 	private void saveToDB() {
-		ConnectionFactory factory = new ConnectionFactory();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		try {
-			Connection con = factory.createConnection();
-			Guests guests = new Guests(con);
-			Reserves reserves = new Reserves(con);
-			txtNreserva = reserves.createReserve(
-					guests.createGuest(txtNombre.getText().toString(), txtApellido.getText().toString(),
-							sdf.format(txtFechaN.getDate()).toString(), selectedNationality,
-							txtTelefono.getText().toString()),
-					sdf.format(reservas.txtFechaEntrada.getDate()).toString(),
-					sdf.format(reservas.txtFechaSalida.getDate()).toString(),
-					reservas.txtValor.getText().toString(), reservas.selectedPayment);
-			con.close();
-			reservas.dispose();
-			dispose();
-			Exito exito = new Exito(txtNreserva);
-			exito.setVisible(true);
-		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, "Algo salió mal.");
-			e.printStackTrace();
-		}
+		
+		Guest guest = new Guest(
+				txtNombre.getText().toString(),
+				txtApellido.getText().toString(),
+				sdf.format(txtFechaN.getDate()).toString(),
+				selectedNationality,
+				txtTelefono.getText().toString());
+		
+		Reserve reserve = new Reserve(
+				guest.getId(),
+				sdf.format(reservas.txtFechaEntrada.getDate()).toString(),
+				sdf.format(reservas.txtFechaSalida.getDate()).toString(),
+				reservas.txtValor.getText().toString(),
+				reservas.selectedPayment);
+		
+		GuestController gc = new GuestController();
+		gc.createGuest(guest);
+		ReserveController rc = new ReserveController();
+		rc.createReserve(reserve, guest.getId());
+		
+		txtNreserva = reserve.getId();
+		
+		reservas.dispose();
+		dispose();
+		Exito exito = new Exito(txtNreserva);
+		exito.setVisible(true);
 	}
 }

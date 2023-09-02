@@ -1,4 +1,4 @@
-package view;
+package com.alura.hotelalura.view;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -64,7 +64,7 @@ public class Exito extends JDialog {
 		lblLine_1.setBounds(0, 108, 378, 21);
 		contentPanel.add(lblLine_1);
 
-		JLabel lblLine_2 = new JLabel("NÃºmero de reserva: " + nReserve);
+		JLabel lblLine_2 = new JLabel("Número de reserva: " + nReserve);
 		lblLine_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLine_2.setForeground(new Color(12, 138, 199));
 		lblLine_2.setFont(new Font("Arial", Font.BOLD, 18));

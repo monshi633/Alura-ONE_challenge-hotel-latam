@@ -1,4 +1,4 @@
-package utils;
+package com.alura.hotelalura.utils;
 
 public class DBCredentials {
 	String username = "root";

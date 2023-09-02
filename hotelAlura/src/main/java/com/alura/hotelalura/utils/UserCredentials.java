@@ -1,4 +1,4 @@
-package utils;
+package com.alura.hotelalura.utils;
 
 public class UserCredentials {
 	String username = "admin";

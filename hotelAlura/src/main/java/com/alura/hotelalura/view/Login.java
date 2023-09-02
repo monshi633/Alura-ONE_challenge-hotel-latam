@@ -1,11 +1,11 @@
-package view;
+package com.alura.hotelalura.view;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import utils.UserCredentials;
+import com.alura.hotelalura.utils.UserCredentials;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -272,7 +272,7 @@ public class Login extends JFrame {
 			menu.setVisible(true);
 			dispose();
 		} else {
-			JOptionPane.showMessageDialog(this, "Usuario o Contrase√±a no v√°lidos");
+			JOptionPane.showMessageDialog(this, "Usuario o ContraseÒa no v·lidos");
 		}
 		
 	}
