@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import com.alura.hotelalura.model.Reserve;
@@ -23,7 +25,7 @@ public class ReserveDAO {
 			PreparedStatement statement = con.prepareStatement(
 					"INSERT INTO reservas (huesped_id, fechaEntrada, fechaSalida, valor, formaPago) VALUES (?, ?, ?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
-			
+
 			statement.setInt(1, reserve.getGuestId());
 			statement.setDate(2, Date.valueOf(reserve.getDateIn()));
 			statement.setDate(3, Date.valueOf(reserve.getDateOut()));
@@ -32,7 +34,7 @@ public class ReserveDAO {
 			statement.executeUpdate();
 
 			ResultSet rst = statement.getGeneratedKeys();
-			
+
 			while (rst.next()) {
 				reserve.setId(rst.getInt(1));
 			}
@@ -41,20 +43,20 @@ public class ReserveDAO {
 		}
 	}
 
-	public Vector<String> readReserve(Integer id) {
+	public Vector<String> readReserveId(Integer id) {
 		try {
-			PreparedStatement statement = con.prepareStatement("SELECT r.fechaEntrada, r.fechaSalida, r.valor, r.formaPago FROM reservas AS r WHERE id = ?");
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM reservas WHERE id = ?");
 
 			statement.setInt(1, id);
 			statement.execute();
 
 			Vector<String> vector = new Vector<>();
-			
+
 			ResultSet rst = statement.executeQuery();
-			
+
 			while (rst.next()) {
 				vector.add(id.toString());
-//				vector.add(rst.getString("huesped_id"));
+				vector.add(rst.getString("huesped_id"));
 				vector.add(rst.getString("fechaEntrada"));
 				vector.add(rst.getString("fechaSalida"));
 				vector.add(rst.getString("valor"));
@@ -66,10 +68,39 @@ public class ReserveDAO {
 		}
 	}
 
-	public void updateReserve(Integer id, Integer guestId, String dateIn, String dateOut, String price,	String paymentMethod) {
+	public List<Vector<String>> readReserveGuestId(Integer guestId) {
 		try {
-			PreparedStatement statement = con.prepareStatement("UPDATE reservas SET huesped_id = ?, fechaEntrada = ?, fechaSalida = ?, valor = ?, formaPago = ? WHERE id = ?");
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM reservas WHERE huesped_id = ?");
+
+			statement.setInt(1, guestId);
+			statement.execute();
+
+			List<Vector<String>> vectorList = new ArrayList<>();
+
+			ResultSet rst = statement.executeQuery();
 			
+			while (rst.next()) {
+				Vector<String> vector = new Vector<>();
+				vector.add(rst.getString("id"));
+				vector.add(guestId.toString());
+				vector.add(rst.getString("fechaEntrada"));
+				vector.add(rst.getString("fechaSalida"));
+				vector.add(rst.getString("valor"));
+				vector.add(rst.getString("formaPago"));
+				vectorList.add(vector);
+			}
+			return vectorList;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void updateReserve(Integer id, Integer guestId, String dateIn, String dateOut, String price,
+			String paymentMethod) {
+		try {
+			PreparedStatement statement = con.prepareStatement(
+					"UPDATE reservas SET huesped_id = ?, fechaEntrada = ?, fechaSalida = ?, valor = ?, formaPago = ? WHERE id = ?");
+
 			statement.setInt(1, guestId);
 			statement.setDate(2, Date.valueOf(dateIn));
 			statement.setDate(3, Date.valueOf(dateOut));
@@ -88,26 +119,26 @@ public class ReserveDAO {
 	public void deleteReserveId(Integer id) {
 		try {
 			PreparedStatement statement = con.prepareStatement("DELETE FROM reservas WHERE id = ?");
-			
+
 			statement.setInt(1, id);
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	/*
 	 * Deletes every reserve of given guest
 	 */
 	public void deleteReserveGuestId(Integer guestId) {
 		try {
 			PreparedStatement statement = con.prepareStatement("DELETE FROM reservas WHERE huesped_id = ?");
-			
+
 			statement.setInt(1, guestId);
-			statement.executeUpdate();			
+			statement.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 }

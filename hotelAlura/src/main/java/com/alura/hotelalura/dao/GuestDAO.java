@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import com.alura.hotelalura.model.Guest;
@@ -41,11 +43,39 @@ public class GuestDAO{
 		}
 	}
 
-	public Vector<String> readGuest(String lastName){
+	public List<Vector<String>> readGuestLastName(String lastName){
 		try {
 			PreparedStatement statement = con.prepareStatement("SELECT * FROM huespedes WHERE apellido = ?");
 			
 			statement.setString(1, lastName);
+			statement.execute();
+			
+			List<Vector<String>> vectorList = new ArrayList<>();
+			
+			ResultSet rst = statement.executeQuery();
+			
+			while(rst.next()) {
+				Vector<String> vector = new Vector<>();
+				vector.add(rst.getString("id"));
+				vector.add(rst.getString("nombre"));
+				vector.add(lastName);
+				vector.add(rst.getString("fechaNacimiento"));
+				vector.add(rst.getString("nacionalidad"));
+				vector.add(rst.getString("telefono"));
+				vectorList.add(vector);
+			}
+			
+			return vectorList;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public Vector<String> readGuestId(Integer id) {
+		try {
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM huespedes WHERE id = ?");
+			
+			statement.setInt(1, id);
 			statement.execute();
 			
 			Vector<String> vector = new Vector<>();
@@ -53,20 +83,19 @@ public class GuestDAO{
 			ResultSet rst = statement.executeQuery();
 			
 			while(rst.next()) {
-				vector.add(rst.getString("id"));
+				vector.add(id.toString());
 				vector.add(rst.getString("nombre"));
-				vector.add(lastName);
+				vector.add(rst.getString("apellido"));
 				vector.add(rst.getString("fechaNacimiento"));
 				vector.add(rst.getString("nacionalidad"));
 				vector.add(rst.getString("telefono"));
 			}
-			
-			return vector; // should return a list of vectors for multiple coincidence
+			return vector;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
-
+	
 	public void updateGuest(Integer id, String name, String lastName, String birthDate, String nationality, String phone){
 		try {
 			PreparedStatement statement = con.prepareStatement("UPDATE huespedes SET nombre = ?, apellido = ?, fechaNacimiento = ?, nacionalidad = ?, telefono = ? WHERE id = ?");

@@ -19,7 +19,10 @@ public class TestGuests {
 //		System.out.println(gc.readGuest("Manso"));
 //		gc.updateGuest(39, "Peppermint", "Buttler", "1111-01-01", "Unknown", "000");
 //		gc.deleteGuest(2);
-		
+		for (int i = 0; i < gc.readGuestLastName("top").size(); i++) {
+			System.out.println(gc.readGuestLastName("top").get(i));
+		}
+		System.out.println(gc.readGuestLastName("top"));
 	}
 
 }
