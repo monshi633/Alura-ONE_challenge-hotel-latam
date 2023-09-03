@@ -243,10 +243,12 @@ public class Login extends JFrame {
 			public void mouseEntered(MouseEvent e) {
 				btnLogin.setBackground(new Color(0, 156, 223));
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnLogin.setBackground(SystemColor.textHighlight);
 			}
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				login();

@@ -73,7 +73,8 @@ public class RegistroHuespedNuevo extends JFrame {
 		RegistroHuespedNuevo.reservas = reservas;
 
 		setResizable(false);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroHuespedNuevo.class.getResource("/imagenes/lOGO-50PX.png")));
+		setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(RegistroHuespedNuevo.class.getResource("/imagenes/lOGO-50PX.png")));
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 634);
 		contentPane = new JPanel();
@@ -101,11 +102,13 @@ public class RegistroHuespedNuevo extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				dispose();
 			}
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				btnAtras.setBackground(Color.white);
 				labelAtras.setForeground(Color.black);
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnAtras.setBackground(new Color(12, 138, 199));
@@ -137,11 +140,13 @@ public class RegistroHuespedNuevo extends JFrame {
 				}
 				dispose();
 			}
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				btnexit.setBackground(Color.red);
 				labelExit.setForeground(Color.white);
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnexit.setBackground(Color.white);
@@ -268,11 +273,10 @@ public class RegistroHuespedNuevo extends JFrame {
 		txtNacionalidad.setBounds(560, 350, 289, 36);
 		txtNacionalidad.setBackground(SystemColor.text);
 		txtNacionalidad.setFont(new Font("Roboto", Font.PLAIN, 16));
-		txtNacionalidad.setModel(new DefaultComboBoxModel<>(new String[] {
-				"Argentina", "Boliviana", "Brasileña", "Canadiense", "Chilena", "Colombiana",
-				"Costarricense", "Cubana", "Dominicana", "Ecuatoriana", "Estadounidense",
-				"Guatemalteca", "Hondureña", "Mexicana", "Nicaragüense", "Panameña",
-				"Paraguaya", "Peruana", "Salvadoreña", "Uruguaya", "Venezolana"}));
+		txtNacionalidad.setModel(new DefaultComboBoxModel<>(new String[] { "Argentina", "Boliviana", "Brasileña",
+				"Canadiense", "Chilena", "Colombiana", "Costarricense", "Cubana", "Dominicana", "Ecuatoriana",
+				"Estadounidense", "Guatemalteca", "Hondureña", "Mexicana", "Nicaragüense", "Panameña", "Paraguaya",
+				"Peruana", "Salvadoreña", "Uruguaya", "Venezolana" }));
 		txtNacionalidad.setSelectedIndex(-1);
 		txtNacionalidad.addItemListener(new ItemListener() {
 			@Override
@@ -322,18 +326,11 @@ public class RegistroHuespedNuevo extends JFrame {
 	private void saveToDB() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-		Guest guest = new Guest(
-				txtNombre.getText().toString(),
-				txtApellido.getText().toString(),
-				sdf.format(txtFechaN.getDate()).toString(),
-				selectedNationality,
-				txtTelefono.getText().toString());
+		Guest guest = new Guest(txtNombre.getText().toString(), txtApellido.getText().toString(),
+				sdf.format(txtFechaN.getDate()).toString(), selectedNationality, txtTelefono.getText().toString());
 
-		Reserve reserve = new Reserve(
-				guest.getId(),
-				sdf.format(reservas.txtFechaEntrada.getDate()).toString(),
-				sdf.format(reservas.txtFechaSalida.getDate()).toString(),
-				reservas.txtValor.getText().toString(),
+		Reserve reserve = new Reserve(guest.getId(), sdf.format(reservas.txtFechaEntrada.getDate()).toString(),
+				sdf.format(reservas.txtFechaSalida.getDate()).toString(), reservas.txtValor.getText().toString(),
 				reservas.selectedPayment);
 
 		GuestController gc = new GuestController();

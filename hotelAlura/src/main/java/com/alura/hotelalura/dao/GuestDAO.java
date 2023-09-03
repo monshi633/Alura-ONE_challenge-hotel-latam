@@ -12,7 +12,7 @@ import java.util.Vector;
 
 import com.alura.hotelalura.model.Guest;
 
-public class GuestDAO{
+public class GuestDAO {
 
 	Connection con;
 
@@ -20,7 +20,7 @@ public class GuestDAO{
 		this.con = con;
 	}
 
-	public void createGuest(Guest guest){
+	public void createGuest(Guest guest) {
 		try {
 			PreparedStatement statement = con.prepareStatement(
 					"INSERT INTO huespedes (nombre, apellido, fechaNacimiento, nacionalidad, telefono) VALUES (?, ?, ?, ?, ?)",
@@ -35,7 +35,7 @@ public class GuestDAO{
 
 			ResultSet rst = statement.getGeneratedKeys();
 
-			while(rst.next()) {
+			while (rst.next()) {
 				guest.setId(rst.getInt(1));
 			}
 		} catch (SQLException e) {
@@ -43,7 +43,7 @@ public class GuestDAO{
 		}
 	}
 
-	public List<Vector<String>> readGuestLastName(String lastName){
+	public List<Vector<String>> readGuestLastName(String lastName) {
 		try {
 			PreparedStatement statement = con.prepareStatement("SELECT * FROM huespedes WHERE apellido = ?");
 
@@ -54,7 +54,7 @@ public class GuestDAO{
 
 			ResultSet rst = statement.executeQuery();
 
-			while(rst.next()) {
+			while (rst.next()) {
 				Vector<String> vector = new Vector<>();
 				vector.add(rst.getString("id"));
 				vector.add(rst.getString("nombre"));
@@ -82,7 +82,7 @@ public class GuestDAO{
 
 			ResultSet rst = statement.executeQuery();
 
-			while(rst.next()) {
+			while (rst.next()) {
 				vector.add(id.toString());
 				vector.add(rst.getString("nombre"));
 				vector.add(rst.getString("apellido"));
@@ -98,7 +98,8 @@ public class GuestDAO{
 
 	public Vector<String> readGuestFullName(String name, String lastName) {
 		try {
-			PreparedStatement statement = con.prepareStatement("SELECT * FROM huespedes WHERE nombre = ? AND apellido = ?");
+			PreparedStatement statement = con
+					.prepareStatement("SELECT * FROM huespedes WHERE nombre = ? AND apellido = ?");
 
 			statement.setString(1, name);
 			statement.setString(2, lastName);
@@ -108,7 +109,7 @@ public class GuestDAO{
 
 			ResultSet rst = statement.executeQuery();
 
-			while(rst.next()) {
+			while (rst.next()) {
 				vector.add(rst.getString("id"));
 				vector.add(name);
 				vector.add(lastName);
@@ -122,9 +123,11 @@ public class GuestDAO{
 		}
 	}
 
-	public void updateGuest(Integer id, String name, String lastName, String birthDate, String nationality, String phone){
+	public void updateGuest(Integer id, String name, String lastName, String birthDate, String nationality,
+			String phone) {
 		try {
-			PreparedStatement statement = con.prepareStatement("UPDATE huespedes SET nombre = ?, apellido = ?, fechaNacimiento = ?, nacionalidad = ?, telefono = ? WHERE id = ?");
+			PreparedStatement statement = con.prepareStatement(
+					"UPDATE huespedes SET nombre = ?, apellido = ?, fechaNacimiento = ?, nacionalidad = ?, telefono = ? WHERE id = ?");
 
 			statement.setString(1, name);
 			statement.setString(2, lastName);
@@ -138,7 +141,7 @@ public class GuestDAO{
 		}
 	}
 
-	public void deleteGuest(Integer id){
+	public void deleteGuest(Integer id) {
 		try {
 			PreparedStatement statement = con.prepareStatement("DELETE FROM huespedes WHERE id = ?");
 

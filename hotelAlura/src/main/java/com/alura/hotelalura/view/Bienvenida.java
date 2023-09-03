@@ -80,11 +80,13 @@ public class Bienvenida extends JFrame {
 				Confirmacion confirmacion = new Confirmacion();
 				confirmacion.setVisible(true);
 			}
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				btnexit.setBackground(Color.red);
 				labelExit.setForeground(Color.white);
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnexit.setBackground(Color.white);

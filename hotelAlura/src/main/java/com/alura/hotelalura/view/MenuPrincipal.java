@@ -86,6 +86,7 @@ public class MenuPrincipal extends JFrame {
 			public void mouseEntered(MouseEvent e) {
 				btnRegistro.setBackground(new Color(118, 187, 223));
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnRegistro.setBackground(new Color(12, 138, 199));
@@ -117,10 +118,12 @@ public class MenuPrincipal extends JFrame {
 			public void mouseEntered(MouseEvent e) {
 				btnBusqueda.setBackground(new Color(118, 187, 223));
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnBusqueda.setBackground(new Color(12, 138, 199));
 			}
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Busqueda busqueda = new Busqueda();
@@ -167,11 +170,13 @@ public class MenuPrincipal extends JFrame {
 				mp.setVisible(true);
 				dispose();
 			}
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				btnexit.setBackground(Color.red);
 				lblExit.setForeground(Color.white);
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnexit.setBackground(Color.white);

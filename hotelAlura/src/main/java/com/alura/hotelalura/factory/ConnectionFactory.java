@@ -25,7 +25,7 @@ public class ConnectionFactory {
 		this.datasource = pooledDataSource;
 	}
 
-	public Connection getConnection(){
+	public Connection getConnection() {
 		try {
 			return this.datasource.getConnection();
 		} catch (SQLException e) {

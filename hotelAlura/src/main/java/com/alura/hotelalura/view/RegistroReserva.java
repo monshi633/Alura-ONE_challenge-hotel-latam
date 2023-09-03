@@ -176,7 +176,6 @@ public class RegistroReserva extends JFrame {
 		labelAtras.setFont(new Font("Roboto", Font.PLAIN, 23));
 		btnAtras.add(labelAtras);
 
-
 //		Form
 		JLabel lblTitulo = new JLabel("REGISTRO DE RESERVA");
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -291,9 +290,8 @@ public class RegistroReserva extends JFrame {
 		txtFormaPago.setBackground(SystemColor.text);
 		txtFormaPago.setBorder(new LineBorder(new Color(255, 255, 255), 1, true));
 		txtFormaPago.setFont(new Font("Roboto", Font.PLAIN, 16));
-		txtFormaPago.setModel(new DefaultComboBoxModel<>(new String[] {
-				"Tarjeta de crédito", "Tarjeta de débito", "Dinero en efectivo", "Bitcoin"
-				}));
+		txtFormaPago.setModel(new DefaultComboBoxModel<>(
+				new String[] { "Tarjeta de crédito", "Tarjeta de débito", "Dinero en efectivo", "Bitcoin" }));
 		txtFormaPago.setSelectedIndex(-1);
 		txtFormaPago.addItemListener(new ItemListener() {
 			@Override
@@ -315,10 +313,8 @@ public class RegistroReserva extends JFrame {
 		btnGuestStored.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (txtFechaEntrada.getDate() != null
-						&& txtFechaSalida.getDate() != null
-						&& !txtValor.getText().isEmpty()
-						&& selectedPayment != "") {
+				if (txtFechaEntrada.getDate() != null && txtFechaSalida.getDate() != null
+						&& !txtValor.getText().isEmpty() && selectedPayment != "") {
 					RegistroHuespedExistente registro = new RegistroHuespedExistente(RegistroReserva.this);
 					registro.setVisible(true);
 				} else {
@@ -344,10 +340,8 @@ public class RegistroReserva extends JFrame {
 		btnGuestNew.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (txtFechaEntrada.getDate() != null
-						&& txtFechaSalida.getDate() != null
-						&& !txtValor.getText().isEmpty()
-						&& selectedPayment != "") {
+				if (txtFechaEntrada.getDate() != null && txtFechaSalida.getDate() != null
+						&& !txtValor.getText().isEmpty() && selectedPayment != "") {
 					RegistroHuespedNuevo registro = new RegistroHuespedNuevo(RegistroReserva.this);
 					registro.setVisible(true);
 				} else {
@@ -366,12 +360,12 @@ public class RegistroReserva extends JFrame {
 	}
 
 	private void checkDates() {
-		if (txtFechaEntrada.getDate() != null&& txtFechaSalida.getDate() != null) {
+		if (txtFechaEntrada.getDate() != null && txtFechaSalida.getDate() != null) {
 			Date dateIn = txtFechaEntrada.getDate();
 			Date dateOut = txtFechaSalida.getDate();
 			Integer daysDifference = (int) TimeUnit.MILLISECONDS.toDays(dateOut.getTime() - dateIn.getTime());
 //			TO DO: Cuando borro una fecha a mano el txtValor debería ser ""
-			if (dateOut.after(dateIn)|| dateOut.equals(dateIn)) {
+			if (dateOut.after(dateIn) || dateOut.equals(dateIn)) {
 				ReservePrice rp = new ReservePrice(daysDifference);
 				txtValor.setText("$ " + rp.getTotalPrice().toString());
 			} else {
