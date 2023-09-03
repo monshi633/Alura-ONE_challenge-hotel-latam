@@ -49,5 +49,5 @@ public class Reserve {
 	public void setGuestId(Integer guestId) {
 		this.guestId = guestId;
 	}
-	
+
 }

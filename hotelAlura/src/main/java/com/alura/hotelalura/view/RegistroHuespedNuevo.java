@@ -1,33 +1,36 @@
 package com.alura.hotelalura.view;
 
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.SystemColor;
+import java.awt.Toolkit;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
+
+import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
+import javax.swing.border.EmptyBorder;
+
 import com.alura.hotelalura.controller.GuestController;
 import com.alura.hotelalura.controller.ReserveController;
 import com.alura.hotelalura.model.Guest;
 import com.alura.hotelalura.model.Reserve;
 import com.toedter.calendar.JDateChooser;
-import javax.swing.JComboBox;
-import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import java.awt.Font;
-import javax.swing.ImageIcon;
-import java.awt.SystemColor;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.text.SimpleDateFormat;
-import java.awt.Toolkit;
-import javax.swing.SwingConstants;
-import javax.swing.JSeparator;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
 
 @SuppressWarnings("serial")
 public class RegistroHuespedNuevo extends JFrame {
@@ -50,6 +53,7 @@ public class RegistroHuespedNuevo extends JFrame {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					RegistroHuespedNuevo frame = new RegistroHuespedNuevo(reservas);
@@ -70,7 +74,7 @@ public class RegistroHuespedNuevo extends JFrame {
 
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroHuespedNuevo.class.getResource("/imagenes/lOGO-50PX.png")));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 634);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.text);
@@ -147,7 +151,7 @@ public class RegistroHuespedNuevo extends JFrame {
 		header.add(btnexit);
 
 		labelExit = new JLabel("X");
-		labelExit.setForeground(SystemColor.black);
+		labelExit.setForeground(Color.black);
 		labelExit.setBounds(0, 0, 53, 36);
 		labelExit.setHorizontalAlignment(SwingConstants.CENTER);
 		labelExit.setFont(new Font("Roboto", Font.PLAIN, 18));
@@ -175,61 +179,61 @@ public class RegistroHuespedNuevo extends JFrame {
 		lblTitulo.setForeground(new Color(12, 138, 199));
 		lblTitulo.setFont(new Font("Roboto", Font.BOLD, 20));
 		contentPane.add(lblTitulo);
-		
+
 		JLabel lblNombre = new JLabel("NOMBRE");
 		lblNombre.setBounds(562, 119, 253, 14);
 		lblNombre.setForeground(SystemColor.textInactiveText);
 		lblNombre.setFont(new Font("Roboto Black", Font.PLAIN, 18));
 		contentPane.add(lblNombre);
-		
+
 		JLabel lblApellido = new JLabel("APELLIDO");
 		lblApellido.setBounds(560, 189, 255, 14);
 		lblApellido.setForeground(SystemColor.textInactiveText);
 		lblApellido.setFont(new Font("Roboto Black", Font.PLAIN, 18));
 		contentPane.add(lblApellido);
-		
+
 		JLabel lblFechaN = new JLabel("FECHA DE NACIMIENTO");
 		lblFechaN.setBounds(560, 256, 255, 14);
 		lblFechaN.setForeground(SystemColor.textInactiveText);
 		lblFechaN.setFont(new Font("Roboto Black", Font.PLAIN, 18));
 		contentPane.add(lblFechaN);
-		
+
 		JLabel lblNacionalidad = new JLabel("NACIONALIDAD");
 		lblNacionalidad.setBounds(560, 326, 255, 14);
 		lblNacionalidad.setForeground(SystemColor.textInactiveText);
 		lblNacionalidad.setFont(new Font("Roboto Black", Font.PLAIN, 18));
 		contentPane.add(lblNacionalidad);
-		
+
 		JLabel lblTelefono = new JLabel("TEL\u00C9FONO");
 		lblTelefono.setBounds(562, 406, 253, 14);
 		lblTelefono.setForeground(SystemColor.textInactiveText);
 		lblTelefono.setFont(new Font("Roboto Black", Font.PLAIN, 18));
 		contentPane.add(lblTelefono);
-		
+
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBounds(560, 170, 289, 2);
 		separator_1.setForeground(new Color(12, 138, 199));
 		separator_1.setBackground(new Color(12, 138, 199));
 		contentPane.add(separator_1);
-		
+
 		JSeparator separator_2 = new JSeparator();
 		separator_2.setBounds(560, 240, 289, 2);
 		separator_2.setForeground(new Color(12, 138, 199));
 		separator_2.setBackground(new Color(12, 138, 199));
 		contentPane.add(separator_2);
-		
+
 		JSeparator separator_3 = new JSeparator();
 		separator_3.setBounds(560, 314, 289, 2);
 		separator_3.setForeground(new Color(12, 138, 199));
 		separator_3.setBackground(new Color(12, 138, 199));
 		contentPane.add(separator_3);
-		
+
 		JSeparator separator_4 = new JSeparator();
 		separator_4.setBounds(560, 386, 289, 2);
 		separator_4.setForeground(new Color(12, 138, 199));
 		separator_4.setBackground(new Color(12, 138, 199));
 		contentPane.add(separator_4);
-		
+
 		JSeparator separator_5 = new JSeparator();
 		separator_5.setBounds(560, 457, 289, 2);
 		separator_5.setForeground(new Color(12, 138, 199));
@@ -260,7 +264,7 @@ public class RegistroHuespedNuevo extends JFrame {
 		txtFechaN.setDateFormatString("yyyy-MM-dd");
 		contentPane.add(txtFechaN);
 
-		txtNacionalidad = new JComboBox<String>();
+		txtNacionalidad = new JComboBox<>();
 		txtNacionalidad.setBounds(560, 350, 289, 36);
 		txtNacionalidad.setBackground(SystemColor.text);
 		txtNacionalidad.setFont(new Font("Roboto", Font.PLAIN, 16));
@@ -271,6 +275,7 @@ public class RegistroHuespedNuevo extends JFrame {
 				"Paraguaya", "Peruana", "Salvadoreña", "Uruguaya", "Venezolana"}));
 		txtNacionalidad.setSelectedIndex(-1);
 		txtNacionalidad.addItemListener(new ItemListener() {
+			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 					JComboBox<?> cb = (JComboBox<?>) e.getSource();
@@ -313,31 +318,31 @@ public class RegistroHuespedNuevo extends JFrame {
 		labelGuardar.setBounds(0, 0, 122, 35);
 		btnguardar.add(labelGuardar);
 	}
-	
+
 	private void saveToDB() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		
+
 		Guest guest = new Guest(
 				txtNombre.getText().toString(),
 				txtApellido.getText().toString(),
 				sdf.format(txtFechaN.getDate()).toString(),
 				selectedNationality,
 				txtTelefono.getText().toString());
-		
+
 		Reserve reserve = new Reserve(
 				guest.getId(),
 				sdf.format(reservas.txtFechaEntrada.getDate()).toString(),
 				sdf.format(reservas.txtFechaSalida.getDate()).toString(),
 				reservas.txtValor.getText().toString(),
 				reservas.selectedPayment);
-		
+
 		GuestController gc = new GuestController();
 		gc.createGuest(guest);
 		ReserveController rc = new ReserveController();
 		rc.createReserve(reserve, guest.getId());
-		
+
 		txtNreserva = reserve.getId();
-		
+
 		reservas.dispose();
 		dispose();
 		Exito exito = new Exito(txtNreserva);

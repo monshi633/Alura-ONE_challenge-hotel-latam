@@ -1,32 +1,35 @@
 package com.alura.hotelalura.view;
 
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-import com.alura.hotelalura.controller.GuestController;
-import com.alura.hotelalura.controller.ReserveController;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Cursor;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.SystemColor;
-import javax.swing.JTabbedPane;
 import java.awt.Toolkit;
-import javax.swing.SwingConstants;
-import javax.swing.JSeparator;
-import javax.swing.ListSelectionModel;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+import com.alura.hotelalura.controller.GuestController;
+import com.alura.hotelalura.controller.ReserveController;
 
 @SuppressWarnings("serial")
 public class Busqueda extends JFrame {
@@ -46,6 +49,7 @@ public class Busqueda extends JFrame {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					Busqueda frame = new Busqueda();
@@ -63,7 +67,7 @@ public class Busqueda extends JFrame {
 	public Busqueda() {
 		super("Búsqueda reservas - Hotel Alura");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Busqueda.class.getResource("/imagenes/lupa2.png")));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 571);
 		setLocationRelativeTo(null);
 		setUndecorated(true);
@@ -222,7 +226,7 @@ public class Busqueda extends JFrame {
 		btnBuscar.add(lblBuscar);
 
 //		Results panel
-		final JTabbedPane panel = new JTabbedPane(JTabbedPane.TOP);
+		final JTabbedPane panel = new JTabbedPane(SwingConstants.TOP);
 		panel.setBackground(new Color(12, 138, 199));
 		panel.setFont(new Font("Roboto", Font.PLAIN, 16));
 		panel.setBounds(20, 169, 865, 328);
@@ -305,7 +309,7 @@ public class Busqueda extends JFrame {
 //		Clear view
 		modelReserves.setRowCount(0);
 		modelGuests.setRowCount(0);
-		
+
 		ReserveController rc = new ReserveController();
 		GuestController gc = new GuestController();
 
@@ -339,7 +343,7 @@ public class Busqueda extends JFrame {
 		Integer index;
 		if (tab == 0 && tbReserves.getSelectedRow() != -1) {
 			index = tbReserves.getSelectedRow();
-			
+
 			Integer id = Integer.valueOf(tbReserves.getValueAt(index, 0).toString());
 			Integer guestId = Integer.valueOf(tbReserves.getValueAt(index, 1).toString());
 			String dateIn = tbReserves.getValueAt(index, 2).toString();

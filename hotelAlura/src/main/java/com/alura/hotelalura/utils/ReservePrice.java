@@ -7,7 +7,7 @@ public class ReservePrice {
 	BigDecimal dayPrice = new BigDecimal("420.69");
 	Integer days;
 	BigDecimal totalPrice;
-	
+
 	public ReservePrice(Integer days) {
 		this.days = days;
 	}

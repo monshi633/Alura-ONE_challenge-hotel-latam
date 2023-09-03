@@ -3,7 +3,7 @@ package com.alura.hotelalura.utils;
 public class DBCredentials {
 	String username = "root";
 	String password = "0Ysql$celeste7!";
-	
+
 	public String getUsername() {
 		return username;
 	}

@@ -1,36 +1,36 @@
 package com.alura.hotelalura.view;
 
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import com.alura.hotelalura.utils.UserCredentials;
-
 import java.awt.Color;
 import java.awt.Cursor;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.ImageIcon;
-import javax.swing.JTextField;
-import javax.swing.JSeparator;
-import java.awt.SystemColor;
+import java.awt.EventQueue;
 import java.awt.Font;
-import javax.swing.JPasswordField;
-import javax.swing.SwingConstants;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import java.awt.SystemColor;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
+import javax.swing.border.EmptyBorder;
+
+import com.alura.hotelalura.utils.UserCredentials;
 
 public class Login extends JFrame {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -44,6 +44,7 @@ public class Login extends JFrame {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					Login frame = new Login();
@@ -62,7 +63,7 @@ public class Login extends JFrame {
 		super("Login - Hotel Alura");
 		setResizable(false);
 		setUndecorated(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 788, 527);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -81,7 +82,7 @@ public class Login extends JFrame {
 		panel_1.setBounds(484, 0, 304, 527);
 		panel_1.setLayout(null);
 		panel.add(panel_1);
-		
+
 		final JPanel btnexit = new JPanel();
 		btnexit.setBounds(251, 0, 53, 36);
 		btnexit.setBackground(new Color(12, 138, 199));
@@ -93,13 +94,13 @@ public class Login extends JFrame {
 				Confirmacion confirmacion = new Confirmacion();
 				confirmacion.setVisible(true);
 			}
-			
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				btnexit.setBackground(Color.red);
 				labelExit.setForeground(Color.white);
 			}
-			
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnexit.setBackground(new Color(12, 138, 199));
@@ -107,19 +108,19 @@ public class Login extends JFrame {
 			}
 		});
 		panel_1.add(btnexit);
-		
+
 		labelExit = new JLabel("X");
 		labelExit.setBounds(0, 0, 53, 36);
 		labelExit.setForeground(SystemColor.text);
 		labelExit.setFont(new Font("Roboto", Font.PLAIN, 18));
 		labelExit.setHorizontalAlignment(SwingConstants.CENTER);
 		btnexit.add(labelExit);
-		
+
 		JLabel imgHotel = new JLabel("");
 		imgHotel.setBounds(0, 0, 304, 538);
 		imgHotel.setIcon(new ImageIcon(Login.class.getResource("/imagenes/img-hotel-login-.png")));
 		panel_1.add(imgHotel);
-		
+
 		JPanel header = new JPanel();
 		header.setBackground(SystemColor.window);
 		header.setBounds(0, 0, 788, 36);
@@ -143,13 +144,13 @@ public class Login extends JFrame {
 		lblLogo.setIcon(new ImageIcon(Login.class.getResource("/imagenes/lOGO-50PX.png")));
 		lblLogo.setBounds(65, 65, 48, 59);
 		panel.add(lblLogo);
-		
+
 		JLabel labelTitulo = new JLabel("INICIAR SESIÓN");
 		labelTitulo.setForeground(SystemColor.textHighlight);
 		labelTitulo.setFont(new Font("Roboto Black", Font.PLAIN, 26));
 		labelTitulo.setBounds(65, 149, 202, 26);
 		panel.add(labelTitulo);
-		
+
 		JLabel LabelUsuario = new JLabel("USUARIO");
 		LabelUsuario.setForeground(SystemColor.textInactiveText);
 		LabelUsuario.setFont(new Font("Roboto Black", Font.PLAIN, 20));
@@ -166,7 +167,7 @@ public class Login extends JFrame {
 		separator_1.setBackground(new Color(0, 120, 215));
 		separator_1.setBounds(65, 292, 324, 2);
 		panel.add(separator_1);
-		
+
 		JSeparator separator_2 = new JSeparator();
 		separator_2.setBackground(SystemColor.textHighlight);
 		separator_2.setBounds(65, 393, 324, 2);
@@ -231,7 +232,7 @@ public class Login extends JFrame {
 			}
 		});
 		panel.add(txtContrasena);
-		
+
 		final JPanel btnLogin = new JPanel();
 		btnLogin.setBackground(SystemColor.textHighlight);
 		btnLogin.setBounds(65, 431, 122, 44);
@@ -274,7 +275,7 @@ public class Login extends JFrame {
 		} else {
 			JOptionPane.showMessageDialog(this, "Usuario o Contraseña no válidos");
 		}
-		
+
 	}
 
 	private void headerMousePressed(java.awt.event.MouseEvent evt) {

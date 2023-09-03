@@ -1,22 +1,24 @@
 package com.alura.hotelalura.view;
 
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.SystemColor;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.Toolkit;
-import javax.swing.SwingConstants;
 import java.awt.event.MouseMotionAdapter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.awt.SystemColor;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
+import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
 public class MenuPrincipal extends JFrame {
@@ -31,6 +33,7 @@ public class MenuPrincipal extends JFrame {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					MenuPrincipal frame = new MenuPrincipal();
@@ -48,7 +51,7 @@ public class MenuPrincipal extends JFrame {
 	public MenuPrincipal() {
 		super("Menú principal - Hotel Alura");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipal.class.getResource("/imagenes/aH-40px.png")));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 944, 609);
 		setResizable(false);
 		setLocationRelativeTo(null);
@@ -64,16 +67,16 @@ public class MenuPrincipal extends JFrame {
 		panelMenu.setBounds(0, 0, 257, 609);
 		panelMenu.setLayout(null);
 		contentPane.add(panelMenu);
-		
+
 		JLabel lblLogo = new JLabel("");
 		lblLogo.setBounds(50, 58, 150, 150);
 		lblLogo.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/imagenes/aH-150px.png")));
 		panelMenu.add(lblLogo);
-		
+
 		JSeparator separator = new JSeparator();
 		separator.setBounds(26, 219, 201, 2);
 		panelMenu.add(separator);
-		
+
 		final JPanel btnRegistro = new JPanel();
 		btnRegistro.setBounds(0, 255, 257, 56);
 		btnRegistro.setBackground(new Color(12, 138, 199));
@@ -87,7 +90,7 @@ public class MenuPrincipal extends JFrame {
 			public void mouseExited(MouseEvent e) {
 				btnRegistro.setBackground(new Color(12, 138, 199));
 			}
-			
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				RegistroReserva reservas = new RegistroReserva();
@@ -96,7 +99,7 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		panelMenu.add(btnRegistro);
-		
+
 		lblRegistro = new JLabel("Registro de reservas");
 		lblRegistro.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/imagenes/reservado.png")));
 		lblRegistro.setForeground(SystemColor.text);
@@ -104,7 +107,7 @@ public class MenuPrincipal extends JFrame {
 		lblRegistro.setFont(new Font("Roboto", Font.PLAIN, 18));
 		lblRegistro.setHorizontalAlignment(SwingConstants.LEFT);
 		btnRegistro.add(lblRegistro);
-		
+
 		final JPanel btnBusqueda = new JPanel();
 		btnBusqueda.setBounds(0, 312, 257, 56);
 		btnBusqueda.setBackground(new Color(12, 138, 199));
@@ -126,7 +129,7 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		panelMenu.add(btnBusqueda);
-		
+
 		JLabel lblBusqueda = new JLabel("Búsqueda");
 		lblBusqueda.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/imagenes/pessoas.png")));
 		lblBusqueda.setBounds(27, 11, 200, 34);
@@ -134,7 +137,7 @@ public class MenuPrincipal extends JFrame {
 		lblBusqueda.setForeground(Color.WHITE);
 		lblBusqueda.setFont(new Font("Roboto", Font.PLAIN, 18));
 		btnBusqueda.add(lblBusqueda);
-		
+
 		JPanel header = new JPanel();
 		header.setLayout(null);
 		header.setBackground(Color.WHITE);
@@ -152,7 +155,7 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		contentPane.add(header);
-		
+
 		final JPanel btnexit = new JPanel();
 		btnexit.setLayout(null);
 		btnexit.setBackground(Color.WHITE);
@@ -176,25 +179,25 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		header.add(btnexit);
-		
+
 		lblExit = new JLabel("X");
 		lblExit.setBounds(0, 0, 53, 36);
 		lblExit.setHorizontalAlignment(SwingConstants.CENTER);
 		lblExit.setFont(new Font("Roboto", Font.PLAIN, 18));
 		btnexit.add(lblExit);
-		
+
 		JPanel panelFecha = new JPanel();
 		panelFecha.setBackground(new Color(118, 187, 223));
 		panelFecha.setBounds(256, 84, 688, 121);
 		panelFecha.setLayout(null);
 		contentPane.add(panelFecha);
-		
+
 		JLabel lblTitulo = new JLabel("Sistema de reservas Hotel Alura");
 		lblTitulo.setBounds(180, 11, 356, 42);
 		lblTitulo.setForeground(Color.WHITE);
 		lblTitulo.setFont(new Font("Roboto", Font.PLAIN, 24));
 		panelFecha.add(lblTitulo);
-		
+
 		JLabel labelFecha = new JLabel("New label");
 		Date fechaActual = new Date(); // fecha y hora actual
 		String fecha = new SimpleDateFormat("dd/MM/yyyy").format(fechaActual); // formatear la fecha en una cadena
@@ -203,7 +206,7 @@ public class MenuPrincipal extends JFrame {
 		labelFecha.setFont(new Font("Roboto", Font.PLAIN, 33));
 		labelFecha.setText("Hoy es " + fecha); // setear la representacion en cadena de la fecha
 		panelFecha.add(labelFecha);
-		
+
 		JLabel lblSubTitulo = new JLabel("Bienvenido");
 		lblSubTitulo.setFont(new Font("Roboto", Font.BOLD, 24));
 		lblSubTitulo.setBounds(302, 234, 147, 46);
@@ -225,12 +228,12 @@ public class MenuPrincipal extends JFrame {
 		lblList_1.setFont(new Font("Roboto", Font.PLAIN, 17));
 		lblList_1.setBounds(312, 444, 295, 27);
 		contentPane.add(lblList_1);
-		
+
 		JLabel lblList_2 = new JLabel("- Edición de Reservas y Huéspedes existentes");
 		lblList_2.setFont(new Font("Roboto", Font.PLAIN, 17));
 		lblList_2.setBounds(312, 482, 355, 27);
 		contentPane.add(lblList_2);
-		
+
 		JLabel lblList_3 = new JLabel("- Eliminar todo tipo de registros");
 		lblList_3.setFont(new Font("Roboto", Font.PLAIN, 17));
 		lblList_3.setBounds(312, 520, 295, 27);

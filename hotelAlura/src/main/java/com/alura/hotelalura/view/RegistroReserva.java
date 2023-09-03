@@ -1,34 +1,35 @@
 package com.alura.hotelalura.view;
 
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.SystemColor;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.ImageIcon;
 import java.awt.Color;
-import javax.swing.JTextField;
-
-import com.alura.hotelalura.utils.ReservePrice;
-import com.toedter.calendar.JDateChooser;
-
+import java.awt.EventQueue;
 import java.awt.Font;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
+import java.awt.SystemColor;
+import java.awt.Toolkit;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.Toolkit;
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
-import java.beans.PropertyChangeEvent;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+
+import com.alura.hotelalura.utils.ReservePrice;
+import com.toedter.calendar.JDateChooser;
 
 @SuppressWarnings("serial")
 public class RegistroReserva extends JFrame {
@@ -48,6 +49,7 @@ public class RegistroReserva extends JFrame {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					RegistroReserva frame = new RegistroReserva();
@@ -65,7 +67,7 @@ public class RegistroReserva extends JFrame {
 	public RegistroReserva() {
 		super("Registro reserva - Hotel Alura");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroReserva.class.getResource("/imagenes/aH-40px.png")));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 560);
 		setResizable(false);
 		contentPane = new JPanel();
@@ -90,18 +92,18 @@ public class RegistroReserva extends JFrame {
 		panel_1.setBackground(new Color(12, 138, 199));
 		panel_1.setLayout(null);
 		panel.add(panel_1);
-		
+
 		JLabel logo = new JLabel("");
 		logo.setBounds(197, 68, 104, 107);
 		logo.setIcon(new ImageIcon(RegistroReserva.class.getResource("/imagenes/Ha-100px.png")));
 		panel_1.add(logo);
-		
+
 		JLabel imagenFondo = new JLabel("");
 		imagenFondo.setBounds(0, 140, 482, 420);
 		imagenFondo.setBackground(Color.WHITE);
 		imagenFondo.setIcon(new ImageIcon(RegistroReserva.class.getResource("/imagenes/reservas-img-3.png")));
 		panel_1.add(imagenFondo);
-		
+
 		final JPanel btnexit = new JPanel();
 		btnexit.setBounds(429, 0, 53, 36);
 		btnexit.setLayout(null);
@@ -113,13 +115,13 @@ public class RegistroReserva extends JFrame {
 				principal.setVisible(true);
 				dispose();
 			}
-			
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				btnexit.setBackground(Color.red);
 				labelExit.setForeground(Color.white);
 			}
-			
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnexit.setBackground(new Color(12, 138, 199));
@@ -127,14 +129,14 @@ public class RegistroReserva extends JFrame {
 			}
 		});
 		panel_1.add(btnexit);
-		
+
 		labelExit = new JLabel("X");
 		labelExit.setForeground(Color.WHITE);
 		labelExit.setBounds(0, 0, 53, 36);
 		labelExit.setHorizontalAlignment(SwingConstants.CENTER);
 		labelExit.setFont(new Font("Roboto", Font.PLAIN, 18));
 		btnexit.add(labelExit);
-		
+
 //		Header
 		JPanel header = new JPanel();
 		header.setBounds(0, 0, 910, 36);
@@ -153,13 +155,13 @@ public class RegistroReserva extends JFrame {
 				usuario.setVisible(true);
 				dispose();
 			}
-			
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				btnAtras.setBackground(new Color(12, 138, 199));
 				labelAtras.setForeground(Color.white);
 			}
-			
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnAtras.setBackground(Color.white);
@@ -167,13 +169,13 @@ public class RegistroReserva extends JFrame {
 			}
 		});
 		header.add(btnAtras);
-		
+
 		labelAtras = new JLabel("<");
 		labelAtras.setBounds(0, 0, 53, 36);
 		labelAtras.setHorizontalAlignment(SwingConstants.CENTER);
 		labelAtras.setFont(new Font("Roboto", Font.PLAIN, 23));
 		btnAtras.add(labelAtras);
-		
+
 
 //		Form
 		JLabel lblTitulo = new JLabel("REGISTRO DE RESERVA");
@@ -247,7 +249,7 @@ public class RegistroReserva extends JFrame {
 		txtValor.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		txtValor.setColumns(10);
 		panel.add(txtValor);
-		
+
 		txtFechaEntrada = new JDateChooser();
 		txtFechaEntrada.getCalendarButton().setBackground(SystemColor.textHighlight);
 		txtFechaEntrada.getCalendarButton()
@@ -259,6 +261,7 @@ public class RegistroReserva extends JFrame {
 		txtFechaEntrada.setFont(new Font("Roboto", Font.PLAIN, 18));
 		txtFechaEntrada.setDateFormatString("yyyy-MM-dd");
 		txtFechaEntrada.addPropertyChangeListener(new PropertyChangeListener() {
+			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				checkDates();
 			}
@@ -276,13 +279,14 @@ public class RegistroReserva extends JFrame {
 		txtFechaSalida.setFont(new Font("Roboto", Font.PLAIN, 18));
 		txtFechaSalida.setDateFormatString("yyyy-MM-dd");
 		txtFechaSalida.addPropertyChangeListener(new PropertyChangeListener() {
+			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				checkDates();
 			}
 		});
 		panel.add(txtFechaSalida);
 
-		txtFormaPago = new JComboBox<String>();
+		txtFormaPago = new JComboBox<>();
 		txtFormaPago.setBounds(70, 390, 290, 35);
 		txtFormaPago.setBackground(SystemColor.text);
 		txtFormaPago.setBorder(new LineBorder(new Color(255, 255, 255), 1, true));
@@ -292,6 +296,7 @@ public class RegistroReserva extends JFrame {
 				}));
 		txtFormaPago.setSelectedIndex(-1);
 		txtFormaPago.addItemListener(new ItemListener() {
+			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 					JComboBox<?> cb = (JComboBox<?>) e.getSource();
@@ -329,7 +334,7 @@ public class RegistroReserva extends JFrame {
 		lblGuestStored.setFont(new Font("Roboto", Font.PLAIN, 18));
 		lblGuestStored.setBounds(0, 0, 130, 35);
 		btnGuestStored.add(lblGuestStored);
-		
+
 		JPanel btnGuestNew = new JPanel();
 		btnGuestNew.setToolTipText("");
 		btnGuestNew.setLayout(null);
@@ -359,7 +364,7 @@ public class RegistroReserva extends JFrame {
 		lblGuestNew.setBounds(0, 0, 130, 35);
 		btnGuestNew.add(lblGuestNew);
 	}
-	
+
 	private void checkDates() {
 		if (txtFechaEntrada.getDate() != null&& txtFechaSalida.getDate() != null) {
 			Date dateIn = txtFechaEntrada.getDate();

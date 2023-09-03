@@ -1,34 +1,37 @@
 package com.alura.hotelalura.view;
 
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JTextField;
 import java.awt.Color;
-import com.alura.hotelalura.controller.GuestController;
-import com.alura.hotelalura.controller.ReserveController;
-import com.alura.hotelalura.model.Reserve;
-import javax.swing.JComboBox;
-import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import java.awt.Cursor;
+import java.awt.EventQueue;
 import java.awt.Font;
-import javax.swing.ImageIcon;
 import java.awt.SystemColor;
+import java.awt.Toolkit;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.Vector;
-import java.awt.Toolkit;
-import javax.swing.SwingConstants;
+
+import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.Cursor;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
+import javax.swing.border.EmptyBorder;
+
+import com.alura.hotelalura.controller.GuestController;
+import com.alura.hotelalura.controller.ReserveController;
+import com.alura.hotelalura.model.Reserve;
 
 @SuppressWarnings("serial")
 public class RegistroHuespedExistente extends JFrame {
@@ -52,6 +55,7 @@ public class RegistroHuespedExistente extends JFrame {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					RegistroHuespedExistente frame = new RegistroHuespedExistente(reservas);
@@ -73,7 +77,7 @@ public class RegistroHuespedExistente extends JFrame {
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(RegistroHuespedExistente.class.getResource("/imagenes/lOGO-50PX.png")));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 634);
 		setLocationRelativeTo(null);
 		setUndecorated(true);
@@ -155,7 +159,7 @@ public class RegistroHuespedExistente extends JFrame {
 
 		labelExit = new JLabel("X");
 		labelExit.setBounds(0, 0, 53, 36);
-		labelExit.setForeground(SystemColor.black);
+		labelExit.setForeground(Color.black);
 		labelExit.setHorizontalAlignment(SwingConstants.CENTER);
 		labelExit.setFont(new Font("Roboto", Font.PLAIN, 18));
 		btnexit.add(labelExit);
@@ -243,7 +247,7 @@ public class RegistroHuespedExistente extends JFrame {
 		separator_5.setBackground(new Color(12, 138, 199));
 		contentPane.add(separator_5);
 
-		txtNombre = new JComboBox<String>();
+		txtNombre = new JComboBox<>();
 		txtNombre.setEnabled(false);
 		txtNombre.setBounds(560, 135, 285, 33);
 		txtNombre.setBackground(SystemColor.text);
@@ -340,6 +344,7 @@ public class RegistroHuespedExistente extends JFrame {
 		contentPane.add(btnGuardar);
 
 		txtNombre.addItemListener(new ItemListener() {
+			@Override
 			public void itemStateChanged(ItemEvent e) {
 				GuestController gc = new GuestController();
 				if (e.getStateChange() == ItemEvent.SELECTED) {

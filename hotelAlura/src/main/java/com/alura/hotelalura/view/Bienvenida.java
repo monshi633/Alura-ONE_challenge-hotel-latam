@@ -1,19 +1,21 @@
 package com.alura.hotelalura.view;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.Panel;
 import java.awt.Color;
-import java.awt.SystemColor;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
 import java.awt.Font;
+import java.awt.Panel;
+import java.awt.SystemColor;
 import java.awt.Toolkit;
-import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
+import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
 public class Bienvenida extends JFrame {
@@ -28,7 +30,7 @@ public class Bienvenida extends JFrame {
 	public Bienvenida() {
 		super("Bienvenido - Hotel Alura");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Bienvenida.class.getResource("/imagenes/aH-40px.png")));
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 910, 537);
 		setResizable(false);
 		setLocationRelativeTo(null);
@@ -48,7 +50,7 @@ public class Bienvenida extends JFrame {
 		imagenFondo.setBounds(-50, 0, 732, 501);
 		imagenFondo.setIcon(new ImageIcon(Bienvenida.class.getResource("/imagenes/menu-img.png")));
 		panel.add(imagenFondo);
-		
+
 		JPanel header = new JPanel();
 		header.setLayout(null);
 		header.setBackground(Color.WHITE);
@@ -109,7 +111,7 @@ public class Bienvenida extends JFrame {
 		lblTitulo.setForeground(SystemColor.textHighlight);
 		lblTitulo.setFont(new Font("Roboto Light", Font.PLAIN, 20));
 		panel.add(lblTitulo);
-		
+
 		JPanel btnLogin = new JPanel();
 		btnLogin.setBounds(754, 300, 83, 70);
 		btnLogin.setLayout(null);
