@@ -175,10 +175,11 @@ public class Busqueda extends JFrame {
 		txtBuscar.setBounds(530, 127, 200, 31);
 		txtBuscar.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		txtBuscar.setColumns(10);
+		String defaultText = "Ingrese apellido o número de reserva";
 		txtBuscar.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				if (txtBuscar.getText().equals("Ingrese apellido o número de reserva")) {
+				if (txtBuscar.getText().equals(defaultText)) {
 					txtBuscar.setText("");
 				}
 			}
@@ -186,7 +187,7 @@ public class Busqueda extends JFrame {
 			@Override
 			public void focusLost(FocusEvent e) {
 				if (txtBuscar.getText().equals("")) {
-					txtBuscar.setText("Ingrese apellido o número de reserva");
+					txtBuscar.setText(defaultText);
 				}
 			}
 		});
@@ -198,25 +199,27 @@ public class Busqueda extends JFrame {
 		separator.setBounds(530, 159, 200, 2);
 		contentPane.add(separator);
 
-		JPanel btnbuscar = new JPanel();
-		btnbuscar.setLayout(null);
-		btnbuscar.setBackground(new Color(12, 138, 199));
-		btnbuscar.setBounds(748, 125, 122, 35);
-		btnbuscar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		btnbuscar.addMouseListener(new MouseAdapter() {
+		JPanel btnBuscar = new JPanel();
+		btnBuscar.setLayout(null);
+		btnBuscar.setBackground(new Color(12, 138, 199));
+		btnBuscar.setBounds(748, 125, 122, 35);
+		btnBuscar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		btnBuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				readFromDB(txtBuscar.getText().toString());
+				if (txtBuscar.getText().length() > 0) {
+					readFromDB(txtBuscar.getText().toString());
+				}
 			}
 		});
-		contentPane.add(btnbuscar);
+		contentPane.add(btnBuscar);
 
 		JLabel lblBuscar = new JLabel("BUSCAR");
 		lblBuscar.setBounds(0, 0, 122, 35);
 		lblBuscar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBuscar.setForeground(Color.WHITE);
 		lblBuscar.setFont(new Font("Roboto", Font.PLAIN, 18));
-		btnbuscar.add(lblBuscar);
+		btnBuscar.add(lblBuscar);
 
 //		Results panel
 		final JTabbedPane panel = new JTabbedPane(JTabbedPane.TOP);
@@ -318,13 +321,13 @@ public class Busqueda extends JFrame {
 		} else if (input.matches("[a-zA-Z ]+")) { // input is a string
 			// read guest
 			if (!gc.readGuestLastName(input).isEmpty()) {
-				Integer guestList = gc.readGuestLastName(input).size();
-				for (int i = 0; i < guestList; i++) {
+				Integer guestListSize = gc.readGuestLastName(input).size();
+				for (int i = 0; i < guestListSize; i++) {
 					modelGuests.addRow(gc.readGuestLastName(input).get(i));
 					Integer guestId = Integer.valueOf(modelGuests.getValueAt(i, 0).toString());
-					Integer reserveList = rc.readReserveGuestId(guestId).size();
+					Integer reserveListSize = rc.readReserveGuestId(guestId).size();
 					// read reserve
-					for (int j = 0; j < reserveList; j++) {
+					for (int j = 0; j < reserveListSize; j++) {
 						modelReserves.addRow(rc.readReserveGuestId(guestId).get(j));
 					}
 				}
@@ -333,9 +336,10 @@ public class Busqueda extends JFrame {
 	}
 
 	private void updateToDB(int tab) {
+		Integer index;
 		if (tab == 0 && tbReserves.getSelectedRow() != -1) {
-			Integer index = tbReserves.getSelectedRow();
-
+			index = tbReserves.getSelectedRow();
+			
 			Integer id = Integer.valueOf(tbReserves.getValueAt(index, 0).toString());
 			Integer guestId = Integer.valueOf(tbReserves.getValueAt(index, 1).toString());
 			String dateIn = tbReserves.getValueAt(index, 2).toString();
@@ -348,7 +352,7 @@ public class Busqueda extends JFrame {
 
 			JOptionPane.showMessageDialog(null, "Reserva actualizada.");
 		} else if (tab == 1 && tbGuests.getSelectedRow() != -1) {
-			Integer index = tbGuests.getSelectedRow();
+			index = tbGuests.getSelectedRow();
 
 			Integer id = Integer.valueOf(tbGuests.getValueAt(index, 0).toString());
 			String name = tbGuests.getValueAt(index, 1).toString();
@@ -370,8 +374,8 @@ public class Busqueda extends JFrame {
 	 * to that guest id
 	 */
 	private void deleteFromDB(Integer tab) {
-		ReserveController rc = new ReserveController();
 		if (tab == 0 && tbReserves.getSelectedRow() != -1) {
+			ReserveController rc = new ReserveController();
 			Object selectedValue = tbReserves.getValueAt(tbReserves.getSelectedRow(), 0);
 			Integer id = Integer.parseInt(selectedValue.toString());
 
@@ -380,6 +384,7 @@ public class Busqueda extends JFrame {
 			modelReserves.removeRow(tbReserves.getSelectedRow());
 			JOptionPane.showMessageDialog(null, "Reserva eliminada.");
 		} else if (tab == 1 && tbGuests.getSelectedRow() != -1) {
+			ReserveController rc = new ReserveController();
 			GuestController gc = new GuestController();
 
 			Object selectedValue = tbGuests.getValueAt(tbGuests.getSelectedRow(), 0);

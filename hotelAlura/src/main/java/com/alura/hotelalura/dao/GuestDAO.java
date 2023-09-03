@@ -96,6 +96,32 @@ public class GuestDAO{
 		}
 	}
 	
+	public Vector<String> readGuestFullName(String name, String lastName) {
+		try {
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM huespedes WHERE nombre = ? AND apellido = ?");
+			
+			statement.setString(1, name);
+			statement.setString(2, lastName);
+			statement.execute();
+			
+			Vector<String> vector = new Vector<>();
+			
+			ResultSet rst = statement.executeQuery();
+			
+			while(rst.next()) {
+				vector.add(rst.getString("id"));
+				vector.add(name);
+				vector.add(lastName);
+				vector.add(rst.getString("fechaNacimiento"));
+				vector.add(rst.getString("nacionalidad"));
+				vector.add(rst.getString("telefono"));
+			}
+			return vector;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
 	public void updateGuest(Integer id, String name, String lastName, String birthDate, String nationality, String phone){
 		try {
 			PreparedStatement statement = con.prepareStatement("UPDATE huespedes SET nombre = ?, apellido = ?, fechaNacimiento = ?, nacionalidad = ?, telefono = ? WHERE id = ?");

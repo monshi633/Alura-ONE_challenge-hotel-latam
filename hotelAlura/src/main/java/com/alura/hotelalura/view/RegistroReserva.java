@@ -301,56 +301,63 @@ public class RegistroReserva extends JFrame {
 		});
 		panel.add(txtFormaPago);
 
-//		TO DO:
-//		JPanel btnViejoHuesped = new JPanel();
-//		btnViejoHuesped.setToolTipText("");
-//		btnViejoHuesped.setLayout(null);
-//		btnViejoHuesped.setBackground(SystemColor.textHighlight);
-//		btnViejoHuesped.setBounds(70, 475, 130, 35);
-//		btnViejoHuesped.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-//		btnViejoHuesped.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseClicked(MouseEvent e) {
-////				TO DO: llevar a indice de huespedes para elegir
-//			}
-//		});
-//		panel.add(btnViejoHuesped);
-//
-//		JLabel labelViejoHuesped = new JLabel("VIEJO");
-//		labelViejoHuesped.setHorizontalAlignment(SwingConstants.CENTER);
-//		labelViejoHuesped.setForeground(new Color(255, 255, 255));
-//		labelViejoHuesped.setFont(new Font("Roboto", Font.PLAIN, 18));
-//		labelViejoHuesped.setBounds(0, 0, 130, 35);
-//		btnViejoHuesped.add(labelViejoHuesped);
-		
-		JPanel btnNuevoHuesped = new JPanel();
-		btnNuevoHuesped.setToolTipText("");
-		btnNuevoHuesped.setLayout(null);
-		btnNuevoHuesped.setBackground(SystemColor.textHighlight);
-		btnNuevoHuesped.setBounds(230, 475, 130, 35);
-		btnNuevoHuesped.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-		btnNuevoHuesped.addMouseListener(new MouseAdapter() {
+		JPanel btnGuestStored = new JPanel();
+		btnGuestStored.setToolTipText("");
+		btnGuestStored.setLayout(null);
+		btnGuestStored.setBackground(SystemColor.textHighlight);
+		btnGuestStored.setBounds(70, 475, 130, 35);
+		btnGuestStored.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		btnGuestStored.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (txtFechaEntrada.getDate() != null
 						&& txtFechaSalida.getDate() != null
 						&& !txtValor.getText().isEmpty()
 						&& selectedPayment != "") {
-					RegistroHuesped registro = new RegistroHuesped(RegistroReserva.this);
+					RegistroHuespedExistente registro = new RegistroHuespedExistente(RegistroReserva.this);
 					registro.setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(null, "Debes llenar todos los campos correctamente.");
 				}
 			}
 		});
-		panel.add(btnNuevoHuesped);
+		panel.add(btnGuestStored);
 
-		JLabel labelNuevoHuesped = new JLabel("NUEVO");
-		labelNuevoHuesped.setHorizontalAlignment(SwingConstants.CENTER);
-		labelNuevoHuesped.setForeground(new Color(255, 255, 255));
-		labelNuevoHuesped.setFont(new Font("Roboto", Font.PLAIN, 18));
-		labelNuevoHuesped.setBounds(0, 0, 130, 35);
-		btnNuevoHuesped.add(labelNuevoHuesped);
+		JLabel lblGuestStored = new JLabel("EXISTENTE");
+		lblGuestStored.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGuestStored.setForeground(new Color(255, 255, 255));
+		lblGuestStored.setFont(new Font("Roboto", Font.PLAIN, 18));
+		lblGuestStored.setBounds(0, 0, 130, 35);
+		btnGuestStored.add(lblGuestStored);
+		
+		JPanel btnGuestNew = new JPanel();
+		btnGuestNew.setToolTipText("");
+		btnGuestNew.setLayout(null);
+		btnGuestNew.setBackground(SystemColor.textHighlight);
+		btnGuestNew.setBounds(230, 475, 130, 35);
+		btnGuestNew.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		btnGuestNew.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (txtFechaEntrada.getDate() != null
+						&& txtFechaSalida.getDate() != null
+						&& !txtValor.getText().isEmpty()
+						&& selectedPayment != "") {
+					RegistroHuespedNuevo registro = new RegistroHuespedNuevo(RegistroReserva.this);
+					registro.setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(null, "Debes llenar todos los campos correctamente.");
+				}
+			}
+		});
+		panel.add(btnGuestNew);
+
+		JLabel lblGuestNew = new JLabel("NUEVO");
+		lblGuestNew.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGuestNew.setForeground(new Color(255, 255, 255));
+		lblGuestNew.setFont(new Font("Roboto", Font.PLAIN, 18));
+		lblGuestNew.setBounds(0, 0, 130, 35);
+		btnGuestNew.add(lblGuestNew);
 	}
 	
 	private void checkDates() {

@@ -6,12 +6,14 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import java.awt.Color;
+import java.awt.Cursor;
 import com.alura.hotelalura.controller.GuestController;
 import com.alura.hotelalura.controller.ReserveController;
 import com.alura.hotelalura.model.Guest;
 import com.alura.hotelalura.model.Reserve;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JComboBox;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -28,7 +30,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
 @SuppressWarnings("serial")
-public class RegistroHuesped extends JFrame {
+public class RegistroHuespedNuevo extends JFrame {
 
 	private static RegistroReserva reservas;
 	private JPanel contentPane;
@@ -50,7 +52,7 @@ public class RegistroHuesped extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RegistroHuesped frame = new RegistroHuesped(reservas);
+					RegistroHuespedNuevo frame = new RegistroHuespedNuevo(reservas);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -62,12 +64,12 @@ public class RegistroHuesped extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RegistroHuesped(final RegistroReserva reservas) {
+	public RegistroHuespedNuevo(final RegistroReserva reservas) {
 		super("Registro huésped - Hotel Alura");
-		RegistroHuesped.reservas = reservas;
+		RegistroHuespedNuevo.reservas = reservas;
 
 		setResizable(false);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroHuesped.class.getResource("/imagenes/lOGO-50PX.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroHuespedNuevo.class.getResource("/imagenes/lOGO-50PX.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 634);
 		contentPane = new JPanel();
@@ -159,12 +161,12 @@ public class RegistroHuesped extends JFrame {
 
 		JLabel logo = new JLabel("");
 		logo.setBounds(194, 39, 104, 107);
-		logo.setIcon(new ImageIcon(RegistroHuesped.class.getResource("/imagenes/Ha-100px.png")));
+		logo.setIcon(new ImageIcon(RegistroHuespedNuevo.class.getResource("/imagenes/Ha-100px.png")));
 		panel.add(logo);
 
 		JLabel imagenFondo = new JLabel("");
 		imagenFondo.setBounds(0, 121, 479, 502);
-		imagenFondo.setIcon(new ImageIcon(RegistroHuesped.class.getResource("/imagenes/registro.png")));
+		imagenFondo.setIcon(new ImageIcon(RegistroHuespedNuevo.class.getResource("/imagenes/registro.png")));
 		panel.add(imagenFondo);
 
 		JLabel lblTitulo = new JLabel("REGISTRO DE NUEVO HU\u00C9SPED");
@@ -239,7 +241,7 @@ public class RegistroHuesped extends JFrame {
 		txtNombre.setBounds(560, 135, 285, 33);
 		txtNombre.setBackground(Color.WHITE);
 		txtNombre.setColumns(10);
-		txtNombre.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		txtNombre.setBorder(BorderFactory.createEmptyBorder());
 		contentPane.add(txtNombre);
 
 		txtApellido = new JTextField();
@@ -247,13 +249,13 @@ public class RegistroHuesped extends JFrame {
 		txtApellido.setBounds(560, 204, 285, 33);
 		txtApellido.setColumns(10);
 		txtApellido.setBackground(Color.WHITE);
-		txtApellido.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		txtApellido.setBorder(BorderFactory.createEmptyBorder());
 		contentPane.add(txtApellido);
 
 		txtFechaN = new JDateChooser();
 		txtFechaN.setBounds(560, 278, 285, 36);
 		txtFechaN.getCalendarButton()
-				.setIcon(new ImageIcon(RegistroHuesped.class.getResource("/imagenes/icon-reservas.png")));
+				.setIcon(new ImageIcon(RegistroHuespedNuevo.class.getResource("/imagenes/icon-reservas.png")));
 		txtFechaN.getCalendarButton().setBackground(SystemColor.textHighlight);
 		txtFechaN.setDateFormatString("yyyy-MM-dd");
 		contentPane.add(txtFechaN);
@@ -283,14 +285,14 @@ public class RegistroHuesped extends JFrame {
 		txtTelefono.setBounds(560, 424, 285, 33);
 		txtTelefono.setColumns(10);
 		txtTelefono.setBackground(Color.WHITE);
-		txtTelefono.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		txtTelefono.setBorder(BorderFactory.createEmptyBorder());
 		contentPane.add(txtTelefono);
 
 		JPanel btnguardar = new JPanel();
 		btnguardar.setBounds(723, 560, 122, 35);
 		btnguardar.setLayout(null);
 		btnguardar.setBackground(new Color(12, 138, 199));
-		btnguardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		btnguardar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		btnguardar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

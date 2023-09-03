@@ -27,6 +27,10 @@ public class GuestController {
 		return guestDao.readGuestId(id);
 	}
 	
+	public Vector<String> readGuestFullName(String name, String lastName){
+		return guestDao.readGuestFullName(name, lastName);
+	}
+	
 	public void updateGuest(Integer id, String name, String lastName, String birthDate, String nationality, String phone){
 		guestDao.updateGuest(id, name, lastName, birthDate, nationality, phone);
 	}
