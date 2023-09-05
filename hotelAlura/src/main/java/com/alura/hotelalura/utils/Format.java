@@ -1,5 +1,6 @@
 package com.alura.hotelalura.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class Format {
@@ -26,9 +27,15 @@ public class Format {
 	}
 	
 	public static boolean isValidDate(String input) {
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//		sdf.format(txtFechaN.getDate()).toString()
-		return false;
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		dateFormat.setLenient(false);
+		
+		try {
+			dateFormat.parse(input);
+			return true;
+		} catch (ParseException e) {
+			return false;
+		}
 	}
 	
 	public static String capitalize(String input) {

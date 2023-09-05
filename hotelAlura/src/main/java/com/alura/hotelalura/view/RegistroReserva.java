@@ -250,6 +250,7 @@ public class RegistroReserva extends JFrame {
 		panel.add(txtValor);
 
 		txtFechaEntrada = new JDateChooser();
+		txtFechaEntrada.getDateEditor().getUiComponent().setFocusable(false);
 		txtFechaEntrada.getCalendarButton().setBackground(SystemColor.textHighlight);
 		txtFechaEntrada.getCalendarButton()
 				.setIcon(new ImageIcon(RegistroReserva.class.getResource("/imagenes/icon-reservas.png")));
@@ -268,6 +269,7 @@ public class RegistroReserva extends JFrame {
 		panel.add(txtFechaEntrada);
 
 		txtFechaSalida = new JDateChooser();
+		txtFechaSalida.getDateEditor().getUiComponent().setFocusable(false);
 		txtFechaSalida.getCalendarButton().setBackground(SystemColor.textHighlight);
 		txtFechaSalida.getCalendarButton()
 				.setIcon(new ImageIcon(RegistroReserva.class.getResource("/imagenes/icon-reservas.png")));
@@ -360,19 +362,19 @@ public class RegistroReserva extends JFrame {
 	}
 
 	private void checkDates() {
-		if (txtFechaEntrada.getDate() != null && txtFechaSalida.getDate() != null) {
+		if (txtFechaEntrada.getDate() == null || txtFechaSalida.getDate() == null) {
+			txtValor.setText("");
+		} else {
 			Date dateIn = txtFechaEntrada.getDate();
 			Date dateOut = txtFechaSalida.getDate();
-//			TO DO: Cuando borro una fecha a mano el txtValor debería ser ""
-			if (dateOut.after(dateIn)|| dateOut.equals(dateIn)) {
+			
+			if (dateOut.compareTo(dateIn) >= 0) {
 				Integer daysDifference = (int) TimeUnit.MILLISECONDS.toDays(dateOut.getTime() - dateIn.getTime());
 				ReservePrice rp = new ReservePrice(daysDifference);
 				txtValor.setText("$ " + rp.getTotalPrice().toString());
 			} else {
 				txtValor.setText("");
 			}
-		} else {
-			txtValor.setText("");
 		}
 	}
 

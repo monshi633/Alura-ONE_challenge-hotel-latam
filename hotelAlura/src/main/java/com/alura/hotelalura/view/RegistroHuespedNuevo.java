@@ -358,13 +358,13 @@ public class RegistroHuespedNuevo extends JFrame {
 	}
 
 	private void saveToDB() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 		Guest guest = new Guest(txtNombre.getText().toString(), txtApellido.getText().toString(),
-				sdf.format(txtFechaN.getDate()).toString(), selectedNationality, txtTelefono.getText().toString());
+				dateFormat.format(txtFechaN.getDate()).toString(), selectedNationality, txtTelefono.getText().toString());
 
-		Reserve reserve = new Reserve(guest.getId(), sdf.format(reservas.txtFechaEntrada.getDate()).toString(),
-				sdf.format(reservas.txtFechaSalida.getDate()).toString(), reservas.txtValor.getText().toString(),
+		Reserve reserve = new Reserve(guest.getId(), dateFormat.format(reservas.txtFechaEntrada.getDate()).toString(),
+				dateFormat.format(reservas.txtFechaSalida.getDate()), reservas.txtValor.getText().toString(),
 				reservas.selectedPayment);
 
 		GuestController gc = new GuestController();
