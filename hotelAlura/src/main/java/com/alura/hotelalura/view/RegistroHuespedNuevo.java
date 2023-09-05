@@ -30,7 +30,10 @@ import com.alura.hotelalura.controller.GuestController;
 import com.alura.hotelalura.controller.ReserveController;
 import com.alura.hotelalura.model.Guest;
 import com.alura.hotelalura.model.Reserve;
+import com.alura.hotelalura.utils.Format;
 import com.toedter.calendar.JDateChooser;
+import javax.swing.event.CaretListener;
+import javax.swing.event.CaretEvent;
 
 @SuppressWarnings("serial")
 public class RegistroHuespedNuevo extends JFrame {
@@ -251,6 +254,15 @@ public class RegistroHuespedNuevo extends JFrame {
 		txtNombre.setBackground(Color.WHITE);
 		txtNombre.setColumns(10);
 		txtNombre.setBorder(BorderFactory.createEmptyBorder());
+		txtNombre.addCaretListener(new CaretListener() {
+			public void caretUpdate(CaretEvent e) {
+				if (!Format.isValidString(txtNombre.getText().toString())) {
+					txtNombre.setForeground(Color.RED);
+				} else {
+					txtNombre.setForeground(Color.BLACK);
+				}
+			}
+		});
 		contentPane.add(txtNombre);
 
 		txtApellido = new JTextField();
@@ -259,6 +271,15 @@ public class RegistroHuespedNuevo extends JFrame {
 		txtApellido.setColumns(10);
 		txtApellido.setBackground(Color.WHITE);
 		txtApellido.setBorder(BorderFactory.createEmptyBorder());
+		txtApellido.addCaretListener(new CaretListener() {
+			public void caretUpdate(CaretEvent e) {
+				if (!Format.isValidString(txtApellido.getText().toString())) {
+					txtApellido.setForeground(Color.RED);
+				} else {
+					txtApellido.setForeground(Color.BLACK);
+				}
+			}
+		});
 		contentPane.add(txtApellido);
 
 		txtFechaN = new JDateChooser();
@@ -295,6 +316,15 @@ public class RegistroHuespedNuevo extends JFrame {
 		txtTelefono.setColumns(10);
 		txtTelefono.setBackground(Color.WHITE);
 		txtTelefono.setBorder(BorderFactory.createEmptyBorder());
+		txtTelefono.addCaretListener(new CaretListener() {
+			public void caretUpdate(CaretEvent e) {
+				if (!Format.isValidNumber(txtTelefono.getText().toString())) {
+					txtTelefono.setForeground(Color.RED);
+				} else {
+					txtTelefono.setForeground(Color.BLACK);
+				}
+			}
+		});
 		contentPane.add(txtTelefono);
 
 		JPanel btnguardar = new JPanel();
@@ -305,11 +335,15 @@ public class RegistroHuespedNuevo extends JFrame {
 		btnguardar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (!txtNombre.getText().isEmpty() && !txtApellido.getText().isEmpty() && txtFechaN.getDate() != null
-						&& selectedNationality != "" && !txtTelefono.getText().isEmpty()) {
+				if (Format.isValidString(txtNombre.getText().toString())
+						&& Format.isValidString(txtApellido.getText().toString())
+						&& txtFechaN.getDate() != null
+						&& selectedNationality != ""
+						&& Format.isValidNumber(txtTelefono.getText())
+						) {
 					saveToDB();
 				} else {
-					JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
+					JOptionPane.showMessageDialog(null, "Debes llenar todos los campos correctamente.");
 				}
 			}
 		});

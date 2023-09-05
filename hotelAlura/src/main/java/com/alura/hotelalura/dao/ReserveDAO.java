@@ -94,19 +94,16 @@ public class ReserveDAO {
 			throw new RuntimeException(e);
 		}
 	}
-
-	public void updateReserve(Integer id, Integer guestId, String dateIn, String dateOut, String price,
-			String paymentMethod) {
+	public void updateReserve(Integer id, String dateIn, String dateOut, String price, String paymentMethod) {
 		try {
 			PreparedStatement statement = con.prepareStatement(
-					"UPDATE reservas SET huesped_id = ?, fechaEntrada = ?, fechaSalida = ?, valor = ?, formaPago = ? WHERE id = ?");
+					"UPDATE reservas SET fechaEntrada = ?, fechaSalida = ?, valor = ?, formaPago = ? WHERE id = ?");
 
-			statement.setInt(1, guestId);
-			statement.setDate(2, Date.valueOf(dateIn));
-			statement.setDate(3, Date.valueOf(dateOut));
-			statement.setString(4, price);
-			statement.setString(5, paymentMethod);
-			statement.setInt(6, id);
+			statement.setDate(1, Date.valueOf(dateIn));
+			statement.setDate(2, Date.valueOf(dateOut));
+			statement.setString(3, price);
+			statement.setString(4, paymentMethod);
+			statement.setInt(5, id);
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);

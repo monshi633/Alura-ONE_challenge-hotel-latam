@@ -265,9 +265,8 @@ public class Login extends JFrame {
 	}
 
 	private void login() {
-		UserCredentials credentials = new UserCredentials();
-		String username = credentials.getUsername();
-		String password = credentials.getPassword();
+		String username = UserCredentials.getUsername();
+		String password = UserCredentials.getPassword();
 		String inputPassword = new String(txtContrasena.getPassword());
 
 		if (txtUsuario.getText().equals(username) && inputPassword.equals(password)) {

@@ -363,14 +363,16 @@ public class RegistroReserva extends JFrame {
 		if (txtFechaEntrada.getDate() != null && txtFechaSalida.getDate() != null) {
 			Date dateIn = txtFechaEntrada.getDate();
 			Date dateOut = txtFechaSalida.getDate();
-			Integer daysDifference = (int) TimeUnit.MILLISECONDS.toDays(dateOut.getTime() - dateIn.getTime());
 //			TO DO: Cuando borro una fecha a mano el txtValor debería ser ""
-			if (dateOut.after(dateIn) || dateOut.equals(dateIn)) {
+			if (dateOut.after(dateIn)|| dateOut.equals(dateIn)) {
+				Integer daysDifference = (int) TimeUnit.MILLISECONDS.toDays(dateOut.getTime() - dateIn.getTime());
 				ReservePrice rp = new ReservePrice(daysDifference);
 				txtValor.setText("$ " + rp.getTotalPrice().toString());
 			} else {
 				txtValor.setText("");
 			}
+		} else {
+			txtValor.setText("");
 		}
 	}
 

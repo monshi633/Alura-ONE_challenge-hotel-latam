@@ -1,14 +1,14 @@
 package com.alura.hotelalura.utils;
 
 public class UserCredentials {
-	String username = "admin";
-	String password = "admin";
+	static String username = "admin";
+	static String password = "admin";
 
-	public String getUsername() {
+	public static String getUsername() {
 		return username;
 	}
 
-	public String getPassword() {
+	public static String getPassword() {
 		return password;
 	}
 }

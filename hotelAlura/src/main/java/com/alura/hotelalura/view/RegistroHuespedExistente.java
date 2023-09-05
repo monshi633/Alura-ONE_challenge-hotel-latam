@@ -180,7 +180,7 @@ public class RegistroHuespedExistente extends JFrame {
 		imagenFondo.setIcon(new ImageIcon(RegistroHuespedExistente.class.getResource("/imagenes/registro.png")));
 		panel.add(imagenFondo);
 
-		JLabel lblTitulo = new JLabel("REGISTRO DE HU\u00C9SPED EXISTENTE");
+		JLabel lblTitulo = new JLabel("REGISTRO DE HUÉSPED EXISTENTE");
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitulo.setBounds(499, 55, 401, 42);
 		lblTitulo.setForeground(new Color(12, 138, 199));
@@ -211,7 +211,7 @@ public class RegistroHuespedExistente extends JFrame {
 		lblNacionalidad.setFont(new Font("Roboto Black", Font.PLAIN, 18));
 		contentPane.add(lblNacionalidad);
 
-		JLabel lblTelefono = new JLabel("TEL\u00C9FONO");
+		JLabel lblTelefono = new JLabel("TELÉFONO");
 		lblTelefono.setBounds(562, 406, 253, 14);
 		lblTelefono.setForeground(SystemColor.textInactiveText);
 		lblTelefono.setFont(new Font("Roboto Black", Font.PLAIN, 18));
@@ -337,7 +337,7 @@ public class RegistroHuespedExistente extends JFrame {
 				if (txtApellido.getText() != "") {
 					saveToDB();
 				} else {
-					JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
+					JOptionPane.showMessageDialog(null, "Debes completar Apellido y Nombre correctamente.");
 				}
 			}
 		});

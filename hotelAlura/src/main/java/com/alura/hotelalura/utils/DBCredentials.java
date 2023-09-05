@@ -1,14 +1,14 @@
 package com.alura.hotelalura.utils;
 
 public class DBCredentials {
-	String username = "root";
-	String password = "0Ysql$celeste7!";
+	static String username = "root";
+	static String password = "0Ysql$celeste7!";
 
-	public String getUsername() {
+	public static String getUsername() {
 		return username;
 	}
 
-	public String getPassword() {
+	public static String getPassword() {
 		return password;
 	}
 }

@@ -29,8 +29,8 @@ public class Bienvenida extends JFrame {
 	 */
 	public Bienvenida() {
 		super("Bienvenido - Hotel Alura");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Bienvenida.class.getResource("/imagenes/aH-40px.png")));
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Bienvenida.class.getResource("/imagenes/aH-40px.png")));
 		setBounds(100, 100, 910, 537);
 		setResizable(false);
 		setLocationRelativeTo(null);

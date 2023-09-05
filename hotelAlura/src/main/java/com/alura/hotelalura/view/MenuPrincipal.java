@@ -209,7 +209,7 @@ public class MenuPrincipal extends JFrame {
 		labelFecha.setBounds(35, 64, 294, 36);
 		labelFecha.setForeground(Color.WHITE);
 		labelFecha.setFont(new Font("Roboto", Font.PLAIN, 33));
-		labelFecha.setText("Hoy es " + fecha); // setear la representacion en cadena de la fecha
+		labelFecha.setText("Hoy es " + fecha);
 		panelFecha.add(labelFecha);
 
 		JLabel lblSubTitulo = new JLabel("Bienvenido");

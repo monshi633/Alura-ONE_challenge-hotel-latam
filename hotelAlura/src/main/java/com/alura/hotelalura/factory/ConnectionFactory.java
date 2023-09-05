@@ -12,14 +12,12 @@ public class ConnectionFactory {
 
 	private DataSource datasource;
 
-	DBCredentials dbc = new DBCredentials();
-
 //	Connection pool
 	public ConnectionFactory() {
 		var pooledDataSource = new ComboPooledDataSource();
 		pooledDataSource.setJdbcUrl("jdbc:mysql://localhost:3306/hotel_alura?useTimezone=true&serverTimezone=UTC");
-		pooledDataSource.setUser(dbc.getUsername());
-		pooledDataSource.setPassword(dbc.getPassword());
+		pooledDataSource.setUser(DBCredentials.getUsername());
+		pooledDataSource.setPassword(DBCredentials.getPassword());
 		pooledDataSource.setMaxPoolSize(10);
 
 		this.datasource = pooledDataSource;
@@ -35,7 +33,7 @@ public class ConnectionFactory {
 
 //	Single connection
 //	public Connection createConnection() throws SQLException {
-//	Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel_alura?useTimezone=true&serverTimezone=UTC", dbc.getUsername(), dbc.getPassword());
+//	Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel_alura?useTimezone=true&serverTimezone=UTC", DBCredentials.getUsername(), DBCredentials.getPassword());
 //	return connection;
 //	}
 

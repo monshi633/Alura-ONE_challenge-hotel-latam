@@ -28,9 +28,9 @@ public class ReserveController {
 		return reserveDao.readReserveGuestId(guestId);
 	}
 
-	public void updateReserve(Integer id, Integer guestId, String dateIn, String dateOut, String price,
+	public void updateReserve(Integer id, String dateIn, String dateOut, String price,
 			String paymentMethod) {
-		reserveDao.updateReserve(id, guestId, dateIn, dateOut, price, paymentMethod);
+		reserveDao.updateReserve(id, dateIn, dateOut, price, paymentMethod);
 	}
 
 	public void deleteReserveId(Integer id) {
