@@ -20,7 +20,7 @@ public class Validations {
 	}
 	
 	public static boolean isValidNumber(String input) {
-		if (input.matches("\\d+")) {
+		if (input.matches("\\d+(\\.\\d{1,2})?")) { //any number with an optional dot and max two more digits
 			return true;
 		}
 		return false;

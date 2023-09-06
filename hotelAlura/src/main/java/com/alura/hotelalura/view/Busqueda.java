@@ -1,6 +1,7 @@
 package com.alura.hotelalura.view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -11,7 +12,6 @@ import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,6 +26,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import com.alura.hotelalura.controller.GuestController;
@@ -39,6 +40,7 @@ public class Busqueda extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtBuscar;
+	private JTextField txtFooter;
 	private DefaultTableModel modelReserves = new DefaultTableModel() {
 		public boolean isCellEditable(int row, int column) {
 			return column >= 2;
@@ -184,25 +186,13 @@ public class Busqueda extends JFrame {
 		contentPane.add(lblTitulo);
 
 		txtBuscar = new JTextField();
-		txtBuscar.setText("Ingrese apellido o número de reserva");
-		txtBuscar.setForeground(SystemColor.textInactiveText);
-		txtBuscar.setFont(new Font("Roboto", Font.PLAIN, 12));
+		txtBuscar.setFont(new Font("Roboto", Font.PLAIN, 14));
 		txtBuscar.setBounds(530, 127, 200, 31);
 		txtBuscar.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-		txtBuscar.setColumns(10);
-		String defaultText = "Ingrese apellido o número de reserva";
 		txtBuscar.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				if (txtBuscar.getText().equals(defaultText)) {
-					txtBuscar.setText("");
-				}
-			}
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (txtBuscar.getText().equals("")) {
-					txtBuscar.setText(defaultText);
-				}
+				txtBuscar.setText("");
 			}
 		});
 		txtBuscar.addKeyListener(new KeyAdapter() {
@@ -216,12 +206,20 @@ public class Busqueda extends JFrame {
 			}
 		});
 		contentPane.add(txtBuscar);
-
+		
 		JSeparator separator = new JSeparator();
 		separator.setForeground(new Color(12, 138, 199));
 		separator.setBackground(new Color(12, 138, 199));
 		separator.setBounds(530, 159, 200, 2);
 		contentPane.add(separator);
+		
+		txtFooter = new JTextField();
+		txtFooter.setText("Ingrese apellido o número de reserva");
+		txtFooter.setForeground(SystemColor.textInactiveText);
+		txtFooter.setFont(new Font("Roboto", Font.PLAIN, 12));
+		txtFooter.setBounds(530, 160, 200, 30);
+		txtFooter.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		contentPane.add(txtFooter);
 
 		JPanel btnBuscar = new JPanel();
 		btnBuscar.setLayout(null);
@@ -264,6 +262,27 @@ public class Busqueda extends JFrame {
 		JScrollPane scroll_table = new JScrollPane(tbReserves);
 		scroll_table.setVisible(true);
 		panel.addTab("Reservas", new ImageIcon(Busqueda.class.getResource("/imagenes/reservado.png")), scroll_table, null);
+		
+//		Adds action listeners to single cells for validation and error display
+		DefaultTableCellRenderer reserveCellRenderer = new DefaultTableCellRenderer() {
+			@Override
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+					boolean hasFocus, int row, int column) {
+				Component rendererComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus,
+						row, column);
+
+				if ((column > 1 && !table.isEditing())
+						&& ((column <= 3 && !Validations.isValidDate(value.toString()))
+								|| (column == 4 && !Validations.isValidNumber(value.toString()))
+								|| (column == 5 && !Validations.isValidPayment(value.toString())))) {
+					rendererComponent.setForeground(Color.RED);
+				} else {
+					rendererComponent.setForeground(Color.BLACK);
+				}
+				return rendererComponent;
+			}
+		};
+		tbReserves.setDefaultRenderer(Object.class, reserveCellRenderer);
 
 		tbGuests = new JTable(modelGuests);
 		tbGuests.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -278,6 +297,28 @@ public class Busqueda extends JFrame {
 		scroll_tableHuespedes.setVisible(true);
 		panel.addTab("Huéspedes", new ImageIcon(Busqueda.class.getResource("/imagenes/pessoas.png")), scroll_tableHuespedes, null);
 
+//		Adds action listeners to single cells for validation and error display
+		DefaultTableCellRenderer guestCellRenderer = new DefaultTableCellRenderer() {
+			@Override
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+					boolean hasFocus, int row, int column) {
+				Component rendererComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus,
+						row, column);
+
+				if ((column != 0 && !table.isEditing())
+						&& ((column <= 2 && !Validations.isValidString(value.toString()))
+								|| (column == 3 && !Validations.isValidDate(value.toString()))
+								|| (column == 4 && !Validations.isValidNationality(value.toString()))
+								|| (column == 5 && !Validations.isValidNumber(value.toString())))) {
+					rendererComponent.setForeground(Color.RED);
+				} else {
+					rendererComponent.setForeground(Color.BLACK);
+				}
+				return rendererComponent;
+			}
+		};
+        tbGuests.setDefaultRenderer(Object.class, guestCellRenderer);
+		
 		JPanel btnEditar = new JPanel();
 		btnEditar.setLayout(null);
 		btnEditar.setBackground(new Color(12, 138, 199));
