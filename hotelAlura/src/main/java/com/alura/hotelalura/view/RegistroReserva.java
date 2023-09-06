@@ -28,6 +28,7 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import com.alura.hotelalura.utils.PaymentMethods;
 import com.alura.hotelalura.utils.ReservePrice;
 import com.toedter.calendar.JDateChooser;
 
@@ -35,10 +36,10 @@ import com.toedter.calendar.JDateChooser;
 public class RegistroReserva extends JFrame {
 
 	private JPanel contentPane;
-	protected JTextField txtValor;
 	protected JDateChooser txtFechaEntrada;
 	protected JDateChooser txtFechaSalida;
-	protected JComboBox<String> txtFormaPago;
+	protected JTextField txtValor;
+	protected JComboBox<PaymentMethods> txtFormaPago;
 	protected String selectedPayment = "";
 	private JLabel labelExit;
 	private JLabel labelAtras;
@@ -287,20 +288,19 @@ public class RegistroReserva extends JFrame {
 		});
 		panel.add(txtFechaSalida);
 
-		txtFormaPago = new JComboBox<>();
+		txtFormaPago = new JComboBox<PaymentMethods>();
 		txtFormaPago.setBounds(70, 390, 290, 35);
 		txtFormaPago.setBackground(SystemColor.text);
 		txtFormaPago.setBorder(new LineBorder(new Color(255, 255, 255), 1, true));
 		txtFormaPago.setFont(new Font("Roboto", Font.PLAIN, 16));
-		txtFormaPago.setModel(new DefaultComboBoxModel<>(
-				new String[] { "Tarjeta de crédito", "Tarjeta de débito", "Dinero en efectivo", "Bitcoin" }));
+		txtFormaPago.setModel(new DefaultComboBoxModel<PaymentMethods>(PaymentMethods.values()));
 		txtFormaPago.setSelectedIndex(-1);
 		txtFormaPago.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 					JComboBox<?> cb = (JComboBox<?>) e.getSource();
-					selectedPayment = (String) cb.getSelectedItem();
+					selectedPayment = (String) cb.getSelectedItem().toString();
 				}
 			}
 		});

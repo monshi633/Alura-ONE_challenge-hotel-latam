@@ -30,7 +30,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.alura.hotelalura.controller.GuestController;
 import com.alura.hotelalura.controller.ReserveController;
-import com.alura.hotelalura.utils.Format;
+import com.alura.hotelalura.utils.Validations;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -39,10 +39,18 @@ public class Busqueda extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtBuscar;
-	private JTable tbGuests;
+	private DefaultTableModel modelReserves = new DefaultTableModel() {
+		public boolean isCellEditable(int row, int column) {
+			return column >= 2;
+		}
+	};
+	private DefaultTableModel modelGuests = new DefaultTableModel() {
+		public boolean isCellEditable(int row, int column) {
+			return column >= 1;
+		}
+	};
 	private JTable tbReserves;
-	private DefaultTableModel modelReserves;
-	private DefaultTableModel modelGuests;
+	private JTable tbGuests;
 	private JLabel labelAtras;
 	private JLabel labelExit;
 	int xMouse, yMouse;
@@ -244,10 +252,9 @@ public class Busqueda extends JFrame {
 		panel.setBounds(20, 169, 865, 328);
 		contentPane.add(panel);
 
-		tbReserves = new JTable();
+		tbReserves = new JTable(modelReserves);
 		tbReserves.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbReserves.setFont(new Font("Roboto", Font.PLAIN, 16));
-		modelReserves = (DefaultTableModel) tbReserves.getModel();
 		modelReserves.addColumn("Numero de Reserva");
 		modelReserves.addColumn("Numero de Huesped");
 		modelReserves.addColumn("Fecha Check In");
@@ -256,13 +263,11 @@ public class Busqueda extends JFrame {
 		modelReserves.addColumn("Forma de Pago");
 		JScrollPane scroll_table = new JScrollPane(tbReserves);
 		scroll_table.setVisible(true);
-		panel.addTab("Reservas", new ImageIcon(Busqueda.class.getResource("/imagenes/reservado.png")), scroll_table,
-				null);
+		panel.addTab("Reservas", new ImageIcon(Busqueda.class.getResource("/imagenes/reservado.png")), scroll_table, null);
 
-		tbGuests = new JTable();
+		tbGuests = new JTable(modelGuests);
 		tbGuests.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbGuests.setFont(new Font("Roboto", Font.PLAIN, 16));
-		modelGuests = (DefaultTableModel) tbGuests.getModel();
 		modelGuests.addColumn("Número de Huesped");
 		modelGuests.addColumn("Nombre");
 		modelGuests.addColumn("Apellido");
@@ -271,8 +276,7 @@ public class Busqueda extends JFrame {
 		modelGuests.addColumn("Telefono");
 		JScrollPane scroll_tableHuespedes = new JScrollPane(tbGuests);
 		scroll_tableHuespedes.setVisible(true);
-		panel.addTab("Huéspedes", new ImageIcon(Busqueda.class.getResource("/imagenes/pessoas.png")),
-				scroll_tableHuespedes, null);
+		panel.addTab("Huéspedes", new ImageIcon(Busqueda.class.getResource("/imagenes/pessoas.png")), scroll_tableHuespedes, null);
 
 		JPanel btnEditar = new JPanel();
 		btnEditar.setLayout(null);
@@ -282,7 +286,6 @@ public class Busqueda extends JFrame {
 		btnEditar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// comprobar que los datos cumplan los formatos necesarios
 				int tab = panel.getSelectedIndex();
 				updateToDB(tab);
 			}
@@ -326,7 +329,7 @@ public class Busqueda extends JFrame {
 		ReserveController rc = new ReserveController();
 		GuestController gc = new GuestController();
 
-		if (Format.isValidNumber(input)) {
+		if (Validations.isValidNumber(input)) {
 			// read reserve
 			Integer reserveNumber = Integer.parseInt(input);
 			if (!rc.readReserveId(reserveNumber).isEmpty()) {
@@ -335,7 +338,7 @@ public class Busqueda extends JFrame {
 				Integer guestId = Integer.valueOf(modelReserves.getValueAt(0, 1).toString());
 				modelGuests.addRow(gc.readGuestId(guestId));
 			}
-		} else if (Format.isValidString(input)) {
+		} else if (Validations.isValidString(input)) {
 			// read guest
 			if (!gc.readGuestLastName(input).isEmpty()) {
 				Integer guestListSize = gc.readGuestLastName(input).size();
@@ -362,25 +365,38 @@ public class Busqueda extends JFrame {
 			String dateOut = tbReserves.getValueAt(index, 3).toString();
 			String price = tbReserves.getValueAt(index, 4).toString();
 			String paymentMethod = tbReserves.getValueAt(index, 5).toString();
-
-			ReserveController rc = new ReserveController();
-			rc.updateReserve(id, dateIn, dateOut, price, paymentMethod);
-
-			JOptionPane.showMessageDialog(null, "Reserva actualizada.");
+			
+			if (Validations.isValidDate(dateIn)
+					&& Validations.isValidDate(dateOut)
+					&& Validations.isValidNumber(price)
+					&& Validations.isValidPayment(paymentMethod)) {
+				ReserveController rc = new ReserveController();
+				rc.updateReserve(id, dateIn, dateOut, price, paymentMethod);
+				JOptionPane.showMessageDialog(null, "Reserva actualizada.");
+			} else {
+				JOptionPane.showMessageDialog(null, "Revise que los datos modificados sean correctos.");
+			}
 		} else if (tab == 1 && tbGuests.getSelectedRow() != -1) {
 			index = tbGuests.getSelectedRow();
 
 			Integer id = Integer.valueOf(tbGuests.getValueAt(index, 0).toString());
-			String name = tbGuests.getValueAt(index, 1).toString();
-			String lastName = tbGuests.getValueAt(index, 2).toString();
+			String name = Validations.capitalize(tbGuests.getValueAt(index, 1).toString());
+			String lastName = Validations.capitalize(tbGuests.getValueAt(index, 2).toString());
 			String birthDate = tbGuests.getValueAt(index, 3).toString();
-			String nationality = tbGuests.getValueAt(index, 4).toString();
+			String nationality = Validations.capitalize(tbGuests.getValueAt(index, 4).toString());
 			String phone = tbGuests.getValueAt(index, 5).toString();
 
-			GuestController gc = new GuestController();
-			gc.updateGuest(id, name, lastName, birthDate, nationality, phone);
-
-			JOptionPane.showMessageDialog(null, "Huesped actualizado.");
+			if (Validations.isValidString(name)
+					&& Validations.isValidString(lastName)
+					&& Validations.isValidDate(birthDate)
+					&& Validations.isValidNationality(nationality)
+					&& Validations.isValidNumber(phone)) {
+				GuestController gc = new GuestController();
+				gc.updateGuest(id, name, lastName, birthDate, nationality, phone);
+				JOptionPane.showMessageDialog(null, "Huesped actualizado.");
+			} else {
+				JOptionPane.showMessageDialog(null, "Revise que los datos modificados sean correctos.");
+			}
 		}
 	}
 

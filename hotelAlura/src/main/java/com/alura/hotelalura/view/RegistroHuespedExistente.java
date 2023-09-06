@@ -370,8 +370,10 @@ public class RegistroHuespedExistente extends JFrame {
 	private void saveToDB() {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-		Reserve reserve = new Reserve(guestId, dateFormat.format(reservas.txtFechaEntrada.getDate()).toString(),
-				dateFormat.format(reservas.txtFechaSalida.getDate()), reservas.txtValor.getText().toString(),
+		Reserve reserve = new Reserve(guestId,
+				dateFormat.format(reservas.txtFechaEntrada.getDate()).toString(),
+				dateFormat.format(reservas.txtFechaSalida.getDate()),
+				reservas.txtValor.getText().toString().substring(2),
 				reservas.selectedPayment);
 
 		ReserveController rc = new ReserveController();
