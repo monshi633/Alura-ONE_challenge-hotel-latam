@@ -21,6 +21,7 @@
 
 
 ## Introducción
+<p>Este proyecto es parte de un curso dictado por Alura y Oracle Next Education</p>
 <p>Este desafío comienza con la interfaz gráfica previamente definida. El usuario puede registrar nuevas reservas en la base de datos y también consultar, editar y eliminar las reservas existentes.<br>
 Al crear una nueva reserva, se puede elegir entre registrar un nuevo huésped o buscar uno en la base de datos mediante su apellido y nombre.</p>
 
