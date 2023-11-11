@@ -12,6 +12,18 @@ import java.util.Vector;
 
 import com.alura.hotelalura.model.Guest;
 
+
+/*
+ * CREATE TABLE huespedes (
+ * id int NOT NULL AUTO_INCREMENT,
+ * nombre varchar(45) NOT NULL,
+ * apellido varchar(45) NOT NULL,
+ * fechaNacimiento date NOT NULL,
+ * nacionalidad varchar(45) NOT NULL,
+ * telefono varchar(45) NOT NULL,
+ * PRIMARY KEY (id)
+ * );
+ */
 public class GuestDAO {
 
 	Connection con;

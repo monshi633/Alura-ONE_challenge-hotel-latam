@@ -12,6 +12,19 @@ import java.util.Vector;
 
 import com.alura.hotelalura.model.Reserve;
 
+/*
+ * CREATE TABLE reservas (
+ * id int NOT NULL AUTO_INCREMENT,
+ * huesped_id int NOT NULL,
+ * fechaEntrada date NOT NULL,
+ * fechaSalida date NOT NULL,
+ * valor varchar(45) NOT NULL,
+ * formaPago varchar(45) NOT NULL,
+ * PRIMARY KEY (id),
+ * KEY huesped_id (huesped_id),
+ * CONSTRAINT huesped_id FOREIGN KEY (huesped_id) REFERENCES huespedes (id)
+ * );
+ */
 public class ReserveDAO {
 
 	Connection con;
